@@ -111,15 +111,15 @@ export default function UnitConverterPage() {
         <div>
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 dark:text-slate-200 hover:text-signal mb-1 transition-colors font-semibold"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 text-slate-800 hover:text-signal mb-1 transition-colors font-semibold"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>BACK TO UTILITY WORKBENCH</span>
           </Link>
-          <h1 className="font-display font-extrabold text-2xl text-slate-900 dark:text-paper">
+          <h1 className="font-display font-extrabold text-2xl text-slate-900 text-slate-900">
             Engineering Unit Converter
           </h1>
-          <p className="font-mono text-xs text-slate-800 dark:text-slate-300 font-medium">
+          <p className="font-mono text-xs text-slate-800 text-slate-800 font-medium">
             Multi-system dimensional translation across length, mass, temperature, and velocity.
           </p>
         </div>
@@ -142,8 +142,8 @@ export default function UnitConverterPage() {
             onClick={() => handleCategoryChange(cat)}
             className={`px-3 py-1.5 rounded uppercase font-semibold transition-colors ${
               category === cat
-                ? "bg-blueprint text-paper border border-signal"
-                : "border border-graphite/30 bg-card-bg text-graphite hover:border-signal"
+                ? "bg-violet-600 text-white border border-signal"
+                : "border border-graphite/30 bg-card-bg text-slate-700 hover:border-signal"
             }`}
           >
             {cat}
@@ -156,17 +156,17 @@ export default function UnitConverterPage() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
           {/* FROM */}
           <div className="md:col-span-2 space-y-2">
-            <label className="text-graphite font-bold block">FROM</label>
+            <label className="text-slate-700 font-bold block">FROM</label>
             <input
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="w-full text-base font-bold bg-paper dark:bg-ink border border-graphite/30 rounded p-2.5 outline-none focus:border-signal text-ink dark:text-paper"
+              className="w-full text-base font-bold bg-white bg-white border border-graphite/30 rounded p-2.5 outline-none focus:border-signal text-slate-900 text-slate-900"
             />
             <select
               value={fromUnit}
               onChange={(e) => setFromUnit(e.target.value)}
-              className="w-full bg-paper dark:bg-ink border border-graphite/30 rounded p-2 outline-none focus:border-signal"
+              className="w-full bg-white bg-white border border-graphite/30 rounded p-2 outline-none focus:border-signal"
             >
               {getUnitOptions().map((u) => (
                 <option key={u} value={u}>
@@ -180,7 +180,7 @@ export default function UnitConverterPage() {
           <div className="flex justify-center pt-4">
             <button
               onClick={swapUnits}
-              className="p-3 rounded-full border border-graphite/30 hover:border-signal hover:bg-signal/10 text-graphite hover:text-signal transition-all"
+              className="p-3 rounded-full border border-graphite/30 hover:border-signal hover:bg-signal/10 text-slate-700 hover:text-signal transition-all"
               title="Swap units"
             >
               <ArrowRightLeft className="w-4 h-4" />
@@ -190,14 +190,14 @@ export default function UnitConverterPage() {
           {/* TO */}
           <div className="md:col-span-2 space-y-2">
             <div className="flex items-center justify-between">
-              <label className="text-graphite font-bold">RESULT</label>
+              <label className="text-slate-700 font-bold">RESULT</label>
               <button
                 onClick={() => {
                   navigator.clipboard.writeText(resultVal);
                   setCopied(true);
                   setTimeout(() => setCopied(false), 1500);
                 }}
-                className="text-[10px] text-graphite hover:text-signal flex items-center gap-1"
+                className="text-[10px] text-slate-700 hover:text-signal flex items-center gap-1"
               >
                 {copied ? <Check className="w-3 h-3 text-wire" /> : <Copy className="w-3 h-3" />}
                 <span>{copied ? "Copied" : "Copy"}</span>
@@ -209,7 +209,7 @@ export default function UnitConverterPage() {
             <select
               value={toUnit}
               onChange={(e) => setToUnit(e.target.value)}
-              className="w-full bg-paper dark:bg-ink border border-graphite/30 rounded p-2 outline-none focus:border-signal"
+              className="w-full bg-white bg-white border border-graphite/30 rounded p-2 outline-none focus:border-signal"
             >
               {getUnitOptions().map((u) => (
                 <option key={u} value={u}>

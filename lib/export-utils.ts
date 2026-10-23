@@ -3,6 +3,8 @@
  * Allows users to download timestamped technical spec sheets and save to local history.
  */
 
+import { saveUserHistoryItem } from "@/lib/auth";
+
 export interface ExportData {
   toolName: string;
   toolSlug: string;
@@ -77,6 +79,7 @@ export function downloadTextReport(
       created_at: now.toISOString(),
       metadata: details,
     };
+    saveUserHistoryItem(historyItem);
     const existing = JSON.parse(localStorage.getItem("toolnest_saved_history") || "[]");
     localStorage.setItem("toolnest_saved_history", JSON.stringify([historyItem, ...existing.slice(0, 49)]));
   } catch (e) {

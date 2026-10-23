@@ -132,15 +132,15 @@ export default function UniversalImport({
   const renderFileIcon = (file: ParsedFile) => {
     switch (file.type) {
       case "image":
-        return <ImageIcon className="w-4 h-4 text-blueprint dark:text-wire" />;
+        return <ImageIcon className="w-4 h-4 text-blueprint text-emerald-700" />;
       case "spreadsheet":
         return <FileSpreadsheet className="w-4 h-4 text-wire" />;
       case "code":
         return <FileCode className="w-4 h-4 text-signal" />;
       case "document":
-        return <FileText className="w-4 h-4 text-blueprint dark:text-wire" />;
+        return <FileText className="w-4 h-4 text-blueprint text-emerald-700" />;
       default:
-        return <File className="w-4 h-4 text-graphite" />;
+        return <File className="w-4 h-4 text-slate-700" />;
     }
   };
 
@@ -148,11 +148,11 @@ export default function UniversalImport({
     <>
       {/* Full Window Drag Overlay */}
       {isDraggingGlobal && (
-        <div className="fixed inset-0 z-50 bg-blueprint/90 dark:bg-ink/95 backdrop-blur-sm border-4 border-dashed border-signal flex flex-col items-center justify-center pointer-events-none p-6 text-center animate-fade-in">
+        <div className="fixed inset-0 z-50 bg-blueprint/90 bg-white/95 backdrop-blur-sm border-4 border-dashed border-signal flex flex-col items-center justify-center pointer-events-none p-6 text-center animate-fade-in">
           <div className="w-20 h-20 rounded-full bg-signal/20 border-2 border-signal flex items-center justify-center mb-4 animate-bounce">
             <UploadCloud className="w-10 h-10 text-signal" />
           </div>
-          <h2 className="font-display text-2xl font-bold text-paper mb-2">
+          <h2 className="font-display text-2xl font-bold text-slate-900 mb-2">
             DROP FILES ANYWHERE ON WORKBENCH
           </h2>
           <p className="font-mono text-xs text-wire max-w-md">
@@ -197,18 +197,18 @@ export default function UniversalImport({
           }`}
         >
           <div className="flex flex-col items-center justify-center gap-2">
-            <div className="w-10 h-10 rounded-full bg-blueprint/10 dark:bg-blueprint/40 border border-blueprint/30 flex items-center justify-center text-blueprint dark:text-wire">
+            <div className="w-10 h-10 rounded-full bg-blueprint/10 dark:bg-blueprint/40 border border-blueprint/30 flex items-center justify-center text-blueprint text-emerald-700">
               <UploadCloud className="w-5 h-5" />
             </div>
 
             <div className="space-y-1">
-              <p className="font-display font-medium text-sm text-ink dark:text-paper">
+              <p className="font-display font-medium text-sm text-slate-900 text-slate-900">
                 <span className="text-signal underline decoration-signal/50 underline-offset-4">
                   Click to import
                 </span>{" "}
                 or drag and drop files anywhere
               </p>
-              <p className="font-mono text-[11px] text-graphite dark:text-gray-400">
+              <p className="font-mono text-[11px] text-slate-700 text-slate-700">
                 Supports Images, PDF, DOCX, XLSX, CSV, JSON, TXT · Up to 20MB per file
               </p>
             </div>
@@ -226,7 +226,7 @@ export default function UniversalImport({
         {/* LLM-style Attachment Chips / Cards */}
         {files.length > 0 && (
           <div className="space-y-3">
-            <div className="flex items-center justify-between text-[11px] font-mono text-graphite dark:text-gray-400">
+            <div className="flex items-center justify-between text-[11px] font-mono text-slate-700 text-slate-700">
               <span>ATTACHED FILES ({files.length})</span>
               <button
                 type="button"
@@ -263,10 +263,10 @@ export default function UniversalImport({
                     )}
 
                     <div className="min-w-0 flex-1">
-                      <p className="text-xs font-mono font-medium text-ink dark:text-paper truncate">
+                      <p className="text-xs font-mono font-medium text-slate-900 text-slate-900 truncate">
                         {f.name}
                       </p>
-                      <p className="text-[10px] font-mono text-graphite dark:text-gray-400">
+                      <p className="text-[10px] font-mono text-slate-700 text-slate-700">
                         {formatBytes(f.size)} · {f.extension.toUpperCase()}
                       </p>
                     </div>
@@ -277,7 +277,7 @@ export default function UniversalImport({
                         e.stopPropagation();
                         removeFile(f.id);
                       }}
-                      className="p-1 rounded hover:bg-graphite/10 text-graphite hover:text-red-500 focus:outline-none"
+                      className="p-1 rounded hover:bg-graphite/10 text-slate-700 hover:text-red-500 focus:outline-none"
                       title="Remove attachment"
                     >
                       <X className="w-3.5 h-3.5" />
@@ -287,7 +287,7 @@ export default function UniversalImport({
                   {/* Smart Routing Tool Suggestions */}
                   {f.suggestedTools.length > 0 && (
                     <div className="pt-2 border-t border-graphite/20 flex flex-wrap gap-1.5 items-center">
-                      <span className="text-[9px] font-mono text-graphite uppercase">
+                      <span className="text-[9px] font-mono text-slate-700 uppercase">
                         Route to:
                       </span>
                       {f.suggestedTools.map((st) => (
@@ -318,7 +318,7 @@ export default function UniversalImport({
                             }
                             router.push(`/tools/${st.slug}`);
                           }}
-                          className="flex items-center gap-1 text-[10px] font-mono font-medium px-2 py-0.5 rounded border border-blueprint/30 bg-blueprint/5 dark:bg-blueprint/20 text-blueprint dark:text-wire hover:border-signal hover:text-signal transition-colors"
+                          className="flex items-center gap-1 text-[10px] font-mono font-medium px-2 py-0.5 rounded border border-blueprint/30 bg-blueprint/5 dark:bg-blueprint/20 text-blueprint text-emerald-700 hover:border-signal hover:text-signal transition-colors"
                         >
                           <span>{st.name}</span>
                           <ArrowRight className="w-2.5 h-2.5" />
@@ -333,7 +333,7 @@ export default function UniversalImport({
         )}
 
         {/* Privacy Default Banner */}
-        <div className="flex items-center gap-2 text-[10px] font-mono text-graphite dark:text-gray-400 px-1">
+        <div className="flex items-center gap-2 text-[10px] font-mono text-slate-700 text-slate-700 px-1">
           <ShieldCheck className="w-3.5 h-3.5 text-wire flex-shrink-0" />
           <span>
             Privacy Default: Files are processed transiently in your browser memory and are never uploaded or stored on servers.

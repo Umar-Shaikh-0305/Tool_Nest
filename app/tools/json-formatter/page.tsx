@@ -91,15 +91,15 @@ export default function JsonFormatterPage() {
         <div>
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 dark:text-slate-200 hover:text-signal mb-1 transition-colors font-semibold"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 text-slate-800 hover:text-signal mb-1 transition-colors font-semibold"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>BACK TO UTILITY WORKBENCH</span>
           </Link>
-          <h1 className="font-display font-extrabold text-2xl text-slate-900 dark:text-paper">
+          <h1 className="font-display font-extrabold text-2xl text-slate-900 text-slate-900">
             JSON Formatter &amp; Validator
           </h1>
-          <p className="font-mono text-xs text-slate-800 dark:text-slate-300 font-medium">
+          <p className="font-mono text-xs text-slate-800 text-slate-800 font-medium">
             Client-side JSON syntax validator, multi-indentation beautifier, and payload compressor.
           </p>
         </div>
@@ -107,25 +107,25 @@ export default function JsonFormatterPage() {
         <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
           <button
             onClick={() => formatJson(2)}
-            className="px-3 py-1.5 rounded border border-graphite/40 hover:border-signal text-slate-900 dark:text-slate-100 font-bold bg-card-bg"
+            className="px-3 py-1.5 rounded border border-graphite/40 hover:border-signal text-slate-900 text-slate-800 font-bold bg-card-bg"
           >
             2 SPACES
           </button>
           <button
             onClick={() => formatJson(4)}
-            className="px-3 py-1.5 rounded border border-graphite/40 hover:border-signal text-slate-900 dark:text-slate-100 font-bold bg-card-bg"
+            className="px-3 py-1.5 rounded border border-graphite/40 hover:border-signal text-slate-900 text-slate-800 font-bold bg-card-bg"
           >
             4 SPACES
           </button>
           <button
             onClick={minifyJson}
-            className="px-3 py-1.5 rounded border border-graphite/40 hover:border-signal text-slate-900 dark:text-slate-100 font-bold bg-card-bg"
+            className="px-3 py-1.5 rounded border border-graphite/40 hover:border-signal text-slate-900 text-slate-800 font-bold bg-card-bg"
           >
             MINIFY
           </button>
           <button
             onClick={handleSaveSpec}
-            className="px-3 py-1.5 rounded border-2 border-signal bg-paper dark:bg-ink text-slate-950 dark:text-paper font-bold flex items-center gap-1.5 shadow-sm hover:bg-signal/10"
+            className="px-3 py-1.5 rounded border-2 border-signal bg-white bg-white text-slate-950 text-slate-900 font-bold flex items-center gap-1.5 shadow-sm hover:bg-signal/10"
             title="Save date-stamped spec sheet"
           >
             <Save className="w-3.5 h-3.5 text-signal" />
@@ -140,7 +140,7 @@ export default function JsonFormatterPage() {
           </button>
           <button
             onClick={handleCopy}
-            className="px-3 py-1.5 rounded border border-graphite/40 hover:border-signal text-slate-900 dark:text-slate-100 font-bold flex items-center gap-1 bg-card-bg"
+            className="px-3 py-1.5 rounded border border-graphite/40 hover:border-signal text-slate-900 text-slate-800 font-bold flex items-center gap-1 bg-card-bg"
           >
             {copied ? <Check className="w-3.5 h-3.5 text-wire" /> : <Copy className="w-3.5 h-3.5" />}
             <span>{copied ? "COPIED" : "COPY"}</span>
@@ -169,10 +169,10 @@ export default function JsonFormatterPage() {
             }
           }}
           placeholder="Paste or write JSON here..."
-          className="w-full p-4 rounded bg-paper dark:bg-ink text-slate-900 dark:text-paper font-mono text-xs leading-relaxed outline-none border border-graphite/40 focus:border-signal font-semibold"
+          className="w-full p-4 rounded bg-white bg-white text-slate-900 text-slate-900 font-mono text-xs leading-relaxed outline-none border border-graphite/40 focus:border-signal font-semibold"
         />
 
-        <div className="flex flex-wrap items-center justify-between pt-3 font-mono text-xs text-slate-800 dark:text-slate-200 font-bold gap-3">
+        <div className="flex flex-wrap items-center justify-between pt-3 font-mono text-xs text-slate-800 text-slate-800 font-bold gap-3">
           <div className="flex items-center gap-2">
             <span
               className={`w-2.5 h-2.5 rounded-full ${
@@ -185,14 +185,14 @@ export default function JsonFormatterPage() {
           <div className="flex items-center gap-4">
             <button
               onClick={handleSaveSpec}
-              className="text-slate-900 dark:text-paper hover:text-signal flex items-center gap-1.5 font-bold"
+              className="text-slate-900 text-slate-900 hover:text-signal flex items-center gap-1.5 font-bold"
             >
               <Save className="w-3.5 h-3.5 text-signal" />
               <span>Save Spec Sheet</span>
             </button>
             <button
               onClick={handleDownload}
-              className="text-slate-900 dark:text-paper hover:text-signal flex items-center gap-1.5 font-bold"
+              className="text-slate-900 text-slate-900 hover:text-signal flex items-center gap-1.5 font-bold"
             >
               <FileDown className="w-3.5 h-3.5 text-signal" />
               <span>Download JSON</span>
@@ -202,7 +202,7 @@ export default function JsonFormatterPage() {
                 setInput("");
                 setError(null);
               }}
-              className="hover:text-red-500 flex items-center gap-1 text-slate-700 dark:text-slate-300 font-bold"
+              className="hover:text-red-500 flex items-center gap-1 text-slate-700 text-slate-800 font-bold"
             >
               <Trash2 className="w-3.5 h-3.5" />
               <span>Clear</span>

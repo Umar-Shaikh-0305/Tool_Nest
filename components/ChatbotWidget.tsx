@@ -229,7 +229,7 @@ export default function ChatbotWidget() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Open AI Assistant"
-        className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-blueprint hover:bg-blueprint-600 text-signal border-2 border-signal shadow-2xl flex items-center justify-center transition-transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-signal/40"
+        className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-violet-600 hover:bg-violet-600-600 text-signal border-2 border-signal shadow-2xl flex items-center justify-center transition-transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-signal/40"
       >
         <GeometricRobotIcon className="w-7 h-7 stroke-[2]" />
         <span className="sr-only">Toggle AI Workbench Assistant</span>
@@ -237,26 +237,26 @@ export default function ChatbotWidget() {
 
       {/* Slide-in Panel from Right Edge */}
       <div
-        className={`fixed inset-y-0 right-0 z-50 w-full sm:w-[420px] bg-paper dark:bg-ink border-l border-graphite/40 shadow-2xl flex flex-col transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-y-0 right-0 z-50 w-full sm:w-[420px] bg-white dark:bg-white border-l border-slate-200 shadow-2xl flex flex-col transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Panel Header */}
-        <div className="p-4 border-b border-graphite/30 bg-card-bg flex items-center justify-between">
+        <div className="p-4 border-b border-slate-200 bg-card-bg flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded bg-blueprint flex items-center justify-center text-signal border border-signal/50">
+            <div className="w-8 h-8 rounded bg-violet-600 flex items-center justify-center text-signal border border-signal/50">
               <GeometricRobotIcon className="w-4 h-4" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <h3 className="font-display font-bold text-sm text-ink dark:text-paper">
+                <h3 className="font-display font-bold text-sm text-slate-900 text-slate-900">
                   ToolNest Assistant
                 </h3>
                 <span className="font-mono text-[9px] px-1.5 py-0.2 rounded bg-wire/20 text-wire font-semibold">
                   PUTER.JS
                 </span>
               </div>
-              <p className="font-mono text-[10px] text-graphite dark:text-gray-400">
+              <p className="font-mono text-[10px] text-slate-700 text-slate-700">
                 Zero-cost client AI · Tool guide & assistant
               </p>
             </div>
@@ -275,13 +275,13 @@ export default function ChatbotWidget() {
                 ])
               }
               title="Reset Chat"
-              className="p-1.5 rounded hover:bg-graphite/10 text-graphite dark:text-gray-400 hover:text-signal focus:outline-none"
+              className="p-1.5 rounded hover:bg-graphite/10 text-slate-700 text-slate-700 hover:text-signal focus:outline-none"
             >
               <RotateCcw className="w-4 h-4" />
             </button>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1.5 rounded hover:bg-graphite/10 text-graphite dark:text-gray-400 hover:text-red-500 focus:outline-none"
+              className="p-1.5 rounded hover:bg-graphite/10 text-slate-700 text-slate-700 hover:text-red-500 focus:outline-none"
             >
               <X className="w-5 h-5" />
             </button>
@@ -300,8 +300,8 @@ export default function ChatbotWidget() {
               <div
                 className={`max-w-[85%] p-3 rounded-lg text-xs leading-relaxed ${
                   m.sender === "user"
-                    ? "bg-blueprint text-paper border border-blueprint-400"
-                    : "bg-card-bg text-ink dark:text-paper border border-graphite/30 shadow-sm"
+                    ? "bg-violet-600 text-slate-900 border border-blueprint-400"
+                    : "bg-card-bg text-slate-900 text-slate-900 border border-slate-200 shadow-sm"
                 }`}
               >
                 {/* Attachments preview in bubble */}
@@ -320,7 +320,7 @@ export default function ChatbotWidget() {
 
                 {/* Suggested Tool Card */}
                 {m.suggestedTool && (
-                  <div className="mt-2.5 pt-2 border-t border-graphite/20">
+                  <div className="mt-2.5 pt-2 border-t border-slate-200">
                     <Link
                       href={`/tools/${m.suggestedTool.slug}`}
                       onClick={() => setIsOpen(false)}
@@ -333,14 +333,14 @@ export default function ChatbotWidget() {
                 )}
               </div>
 
-              <span className="font-mono text-[9px] text-graphite/60 dark:text-gray-500 mt-1 px-1">
+              <span className="font-mono text-[9px] text-slate-500 dark:text-gray-500 mt-1 px-1">
                 {m.timestamp}
               </span>
             </div>
           ))}
 
           {isTyping && (
-            <div className="flex items-center gap-2 text-xs font-mono text-graphite p-2 bg-card-bg/60 rounded border border-graphite/20 w-fit">
+            <div className="flex items-center gap-2 text-xs font-mono text-slate-700 p-2 bg-card-bg/60 rounded border border-slate-200 w-fit">
               <Loader2 className="w-3.5 h-3.5 animate-spin text-signal" />
               <span>Thinking via Puter.js...</span>
             </div>
@@ -351,11 +351,11 @@ export default function ChatbotWidget() {
 
         {/* Pending Attachment Chips */}
         {attachedFiles.length > 0 && (
-          <div className="p-2 border-t border-graphite/20 bg-card-bg flex flex-wrap gap-1.5">
+          <div className="p-2 border-t border-slate-200 bg-card-bg flex flex-wrap gap-1.5">
             {attachedFiles.map((af) => (
               <div
                 key={af.id}
-                className="flex items-center gap-1 text-[10px] font-mono px-2 py-1 rounded bg-blueprint/10 dark:bg-blueprint/40 text-ink dark:text-paper border border-graphite/30"
+                className="flex items-center gap-1 text-[10px] font-mono px-2 py-1 rounded bg-violet-600/10 dark:bg-violet-600/40 text-slate-900 text-slate-900 border border-slate-200"
               >
                 <Paperclip className="w-2.5 h-2.5 text-signal" />
                 <span className="max-w-[120px] truncate">{af.name}</span>
@@ -374,7 +374,7 @@ export default function ChatbotWidget() {
         {/* Input Form */}
         <form
           onSubmit={handleSend}
-          className="p-3 border-t border-graphite/30 bg-card-bg flex items-center gap-2"
+          className="p-3 border-t border-slate-200 bg-card-bg flex items-center gap-2"
         >
           <input
             type="file"
@@ -388,7 +388,7 @@ export default function ChatbotWidget() {
             type="button"
             onClick={() => fileInputRef.current?.click()}
             title="Attach image or document"
-            className="p-2 rounded border border-graphite/30 hover:border-signal text-graphite dark:text-gray-300 hover:text-signal focus:outline-none"
+            className="p-2 rounded border border-slate-200 hover:border-signal text-slate-700 text-slate-700 hover:text-signal focus:outline-none"
           >
             <Paperclip className="w-4 h-4" />
           </button>
@@ -398,13 +398,13 @@ export default function ChatbotWidget() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask assistant or request a tool..."
-            className="flex-1 bg-transparent px-3 py-2 text-xs rounded border border-graphite/30 focus:border-signal focus:outline-none font-sans text-ink dark:text-paper placeholder:text-graphite/60"
+            className="flex-1 bg-transparent px-3 py-2 text-xs rounded border border-slate-200 focus:border-signal focus:outline-none font-sans text-slate-900 text-slate-900 placeholder:text-slate-500"
           />
 
           <button
             type="submit"
             disabled={!input.trim() && attachedFiles.length === 0}
-            className="p-2 rounded bg-signal hover:bg-signal-hover text-ink font-bold disabled:opacity-40 disabled:cursor-not-allowed transition-colors focus:outline-none"
+            className="p-2 rounded bg-signal hover:bg-signal-hover text-slate-900 font-bold disabled:opacity-40 disabled:cursor-not-allowed transition-colors focus:outline-none"
           >
             <Send className="w-4 h-4" />
           </button>

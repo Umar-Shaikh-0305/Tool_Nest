@@ -12,8 +12,7 @@ import {
   MoveDown,
   Scissors,
   Check,
-  AlertCircle,
-  Save,
+  Download,
 } from "lucide-react";
 import { PDFDocument } from "pdf-lib";
 import { downloadTextReport } from "@/lib/export-utils";
@@ -96,12 +95,6 @@ export default function PdfMergeSplitPage() {
         "Total Page Count": totalPages,
         "Combined Ingestion Size": `${totalSizeKb} KB`,
         "Engine": "pdf-lib (100% In-Browser Assembly)",
-        "Executed Date": new Date().toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        }),
-        "Executed Time": new Date().toLocaleTimeString("en-US"),
       },
       manifest
     );
@@ -117,12 +110,6 @@ export default function PdfMergeSplitPage() {
         "Original Page Count": splitFile.pageCount,
         "Extracted Page Range": pageRange,
         "Engine": "pdf-lib (In-Browser Page Copy)",
-        "Executed Date": new Date().toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        }),
-        "Executed Time": new Date().toLocaleTimeString("en-US"),
       }
     );
   };
@@ -154,7 +141,7 @@ export default function PdfMergeSplitPage() {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
 
-      setStatusMessage("Merge complete! PDF document downloaded.");
+      setStatusMessage("Merge complete! Combined PDF downloaded.");
     } catch (err: any) {
       setStatusMessage(`Merge failed: ${err.message}`);
     } finally {
@@ -171,7 +158,6 @@ export default function PdfMergeSplitPage() {
       const newDoc = await PDFDocument.create();
       const totalPages = sourceDoc.getPageCount();
 
-      // Parse range e.g. "1-3, 5"
       const indicesToExtract = new Set<number>();
       const parts = pageRange.split(",");
 
@@ -179,29 +165,33 @@ export default function PdfMergeSplitPage() {
         const trimmed = part.trim();
         if (trimmed.includes("-")) {
           const [startStr, endStr] = trimmed.split("-");
-          const start = Math.max(1, parseInt(startStr, 10));
-          const end = Math.min(totalPages, parseInt(endStr, 10));
-          for (let i = start; i <= end; i++) {
-            indicesToExtract.add(i - 1);
+          const start = parseInt(startStr, 10);
+          const end = parseInt(endStr, 10);
+          if (!isNaN(start) && !isNaN(end)) {
+            for (let p = Math.max(1, start); p <= Math.min(totalPages, end); p++) {
+              indicesToExtract.add(p - 1);
+            }
           }
         } else {
-          const single = parseInt(trimmed, 10);
-          if (single >= 1 && single <= totalPages) {
-            indicesToExtract.add(single - 1);
+          const p = parseInt(trimmed, 10);
+          if (!isNaN(p) && p >= 1 && p <= totalPages) {
+            indicesToExtract.add(p - 1);
           }
         }
       }
 
       const sortedIndices = Array.from(indicesToExtract).sort((a, b) => a - b);
       if (sortedIndices.length === 0) {
-        throw new Error("No valid page numbers found in range.");
+        alert("Please enter a valid page number range.");
+        setIsProcessing(false);
+        return;
       }
 
-      const extractedPages = await newDoc.copyPages(sourceDoc, sortedIndices);
-      extractedPages.forEach((p) => newDoc.addPage(p));
+      const copiedPages = await newDoc.copyPages(sourceDoc, sortedIndices);
+      copiedPages.forEach((page) => newDoc.addPage(page));
 
-      const pdfBytes = await newDoc.save();
-      const blob = new Blob([pdfBytes.buffer as ArrayBuffer], { type: "application/pdf" });
+      const splitBytes = await newDoc.save();
+      const blob = new Blob([splitBytes.buffer as ArrayBuffer], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
 
       const a = document.createElement("a");
@@ -222,252 +212,261 @@ export default function PdfMergeSplitPage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-graphite/40 pb-4">
-        <div>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 dark:text-slate-200 hover:text-signal mb-1 transition-colors font-semibold"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>BACK TO UTILITY WORKBENCH</span>
-          </Link>
-          <h1 className="font-display font-extrabold text-2xl text-slate-900 dark:text-paper">
-            PDF Merge &amp; Split
-          </h1>
-          <p className="font-mono text-xs text-slate-800 dark:text-slate-300 font-medium">
-            Client-side PDF page manipulation via pdf-lib. No documents leave your browser.
-          </p>
-        </div>
+    <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto space-y-6">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-violet-600 transition-colors font-medium"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back to Tools</span>
+        </Link>
 
-        {/* Tab Selector */}
-        <div className="flex items-center gap-2 p-1 rounded-lg border border-graphite/40 bg-card-bg">
-          <button
-            onClick={() => setActiveTab("merge")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono ${
-              activeTab === "merge"
-                ? "bg-blueprint text-paper font-extrabold border border-signal shadow-sm"
-                : "text-slate-800 dark:text-slate-200 hover:text-signal font-semibold"
-            }`}
-          >
-            <Layers className="w-3.5 h-3.5" />
-            <span>MERGE PDFS</span>
-          </button>
-          <button
-            onClick={() => setActiveTab("split")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono ${
-              activeTab === "split"
-                ? "bg-blueprint text-paper font-extrabold border border-signal shadow-sm"
-                : "text-slate-800 dark:text-slate-200 hover:text-signal font-semibold"
-            }`}
-          >
-            <Scissors className="w-3.5 h-3.5" />
-            <span>SPLIT / EXTRACT</span>
-          </button>
-        </div>
-      </div>
+        <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                PDF Merge &amp; Split
+              </h1>
+              <p className="text-sm text-slate-500 mt-1">
+                Combine multiple PDFs or extract selected pages in your browser.
+              </p>
+            </div>
 
-      {statusMessage && (
-        <div className="p-3 rounded bg-blueprint/15 border border-blueprint/40 text-xs font-mono text-blueprint-900 dark:text-wire flex items-center gap-2 font-bold">
-          <Check className="w-4 h-4 text-wire" />
-          <span>{statusMessage}</span>
-        </div>
-      )}
-
-      {/* MERGE TAB */}
-      {activeTab === "merge" ? (
-        <div className="space-y-4">
-          <input
-            type="file"
-            ref={mergeInputRef}
-            onChange={(e) => handleMergeFiles(e.target.files)}
-            multiple
-            accept="application/pdf"
-            className="hidden"
-          />
-
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <button
-              onClick={() => mergeInputRef.current?.click()}
-              className="px-4 py-2 rounded border border-graphite/40 hover:border-signal text-xs font-mono text-slate-900 dark:text-paper hover:text-signal flex items-center gap-2 transition-colors font-bold bg-card-bg"
-            >
-              <Upload className="w-3.5 h-3.5" />
-              <span>+ ADD PDF DOCUMENTS</span>
-            </button>
-
-            <div className="flex items-center gap-2">
-              {mergeList.length > 0 && (
-                <button
-                  onClick={handleSaveMergeSpec}
-                  className="px-4 py-2 rounded bg-paper dark:bg-ink border-2 border-signal text-slate-950 dark:text-paper font-mono font-bold text-xs flex items-center gap-1.5 shadow-sm hover:bg-signal/10"
-                  title="Save date-stamped document manifest"
-                >
-                  <Save className="w-3.5 h-3.5 text-signal" />
-                  <span>SAVE SPEC</span>
-                </button>
-              )}
+            {/* Tab Selector */}
+            <div className="flex rounded-xl bg-slate-100 p-1 border border-slate-200">
               <button
-                onClick={executeMerge}
-                disabled={mergeList.length < 2 || isProcessing}
-                className="px-5 py-2 rounded bg-signal hover:bg-signal-hover text-slate-950 font-mono font-bold text-xs flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed shadow-sm transition-colors"
+                onClick={() => setActiveTab("merge")}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  activeTab === "merge"
+                    ? "bg-violet-600 text-white shadow-sm"
+                    : "text-slate-600 hover:text-violet-600"
+                }`}
               >
-                <FileDown className="w-4 h-4" />
-                <span>{isProcessing ? "MERGING..." : `MERGE & DOWNLOAD (${mergeList.length} FILES)`}</span>
+                <Layers className="w-3.5 h-3.5" />
+                <span>Merge</span>
+              </button>
+              <button
+                onClick={() => setActiveTab("split")}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  activeTab === "split"
+                    ? "bg-violet-600 text-white shadow-sm"
+                    : "text-slate-600 hover:text-violet-600"
+                }`}
+              >
+                <Scissors className="w-3.5 h-3.5" />
+                <span>Split</span>
               </button>
             </div>
           </div>
 
-          {mergeList.length === 0 ? (
-            <div
-              onClick={() => mergeInputRef.current?.click()}
-              className="p-12 rounded-lg border-2 border-dashed border-graphite/40 hover:border-signal text-center cursor-pointer bg-card-bg/60 transition-colors"
-            >
-              <Layers className="w-10 h-10 text-slate-700 dark:text-slate-300 mx-auto mb-2 opacity-60" />
-              <p className="font-display text-sm font-bold text-slate-900 dark:text-paper">
-                Drop two or more PDF files here to merge
-              </p>
-              <p className="font-mono text-xs text-slate-700 dark:text-slate-300 mt-1 font-medium">
-                Order will be preserved in the exported document
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-2">
-              {mergeList.map((item, idx) => (
-                <div
-                  key={item.id}
-                  className="p-3 rounded-lg border border-graphite/40 bg-card-bg flex items-center justify-between shadow-sm"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-xs text-slate-800 dark:text-slate-200 font-extrabold w-6">
-                      #{idx + 1}
-                    </span>
-                    <div>
-                      <p className="font-mono text-xs text-slate-900 dark:text-paper font-bold">
-                        {item.name}
-                      </p>
-                      <p className="font-mono text-[11px] text-slate-800 dark:text-slate-300 font-medium">
-                        {item.pageCount} pages · {(item.size / 1024).toFixed(1)} KB
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-1">
-                    <button
-                      onClick={() => {
-                        if (idx === 0) return;
-                        const copy = [...mergeList];
-                        const t = copy[idx];
-                        copy[idx] = copy[idx - 1];
-                        copy[idx - 1] = t;
-                        setMergeList(copy);
-                      }}
-                      disabled={idx === 0}
-                      className="p-1 rounded text-slate-800 dark:text-slate-200 hover:text-signal disabled:opacity-20"
-                    >
-                      <MoveUp className="w-3.5 h-3.5" />
-                    </button>
-                    <button
-                      onClick={() => {
-                        if (idx === mergeList.length - 1) return;
-                        const copy = [...mergeList];
-                        const t = copy[idx];
-                        copy[idx] = copy[idx + 1];
-                        copy[idx + 1] = t;
-                        setMergeList(copy);
-                      }}
-                      disabled={idx === mergeList.length - 1}
-                      className="p-1 rounded text-slate-800 dark:text-slate-200 hover:text-signal disabled:opacity-20"
-                    >
-                      <MoveDown className="w-3.5 h-3.5" />
-                    </button>
-                    <button
-                      onClick={() => setMergeList(mergeList.filter((_, i) => i !== idx))}
-                      className="p-1 rounded text-red-500 hover:bg-red-500/10 ml-1"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </div>
-              ))}
+          {statusMessage && (
+            <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center gap-2 font-medium">
+              <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>{statusMessage}</span>
             </div>
           )}
-        </div>
-      ) : (
-        /* SPLIT TAB */
-        <div className="space-y-4">
-          <input
-            type="file"
-            ref={splitInputRef}
-            onChange={(e) => handleSplitFile(e.target.files)}
-            accept="application/pdf"
-            className="hidden"
-          />
 
-          {!splitFile ? (
-            <div
-              onClick={() => splitInputRef.current?.click()}
-              className="p-12 rounded-lg border-2 border-dashed border-graphite/40 hover:border-signal text-center cursor-pointer bg-card-bg/60 transition-colors"
-            >
-              <Scissors className="w-10 h-10 text-slate-700 dark:text-slate-300 mx-auto mb-2 opacity-60" />
-              <p className="font-display text-sm font-bold text-slate-900 dark:text-paper">
-                Select a PDF to extract pages
-              </p>
-              <p className="font-mono text-xs text-slate-700 dark:text-slate-300 mt-1 font-medium">
-                Click or drag a single PDF document
-              </p>
-            </div>
-          ) : (
-            <div className="p-6 rounded-lg border border-graphite/40 bg-card-bg space-y-4 font-mono text-xs shadow-sm">
-              <div className="flex items-center justify-between pb-3 border-b border-graphite/20">
-                <div>
-                  <p className="font-bold text-sm text-slate-900 dark:text-paper">{splitFile.name}</p>
-                  <p className="text-slate-800 dark:text-slate-300 font-medium">
-                    Total Pages: {splitFile.pageCount} · {(splitFile.size / 1024).toFixed(1)} KB
+          {/* MERGE TAB */}
+          {activeTab === "merge" ? (
+            <div className="space-y-4">
+              <input
+                type="file"
+                ref={mergeInputRef}
+                onChange={(e) => handleMergeFiles(e.target.files)}
+                multiple
+                accept="application/pdf"
+                className="hidden"
+              />
+
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <button
+                  onClick={() => mergeInputRef.current?.click()}
+                  className="px-4 py-2.5 rounded-xl bg-violet-50 hover:bg-violet-100 text-violet-700 font-semibold text-xs flex items-center gap-2 transition-colors border border-violet-200"
+                >
+                  <Upload className="w-4 h-4" />
+                  <span>+ Add PDF Files</span>
+                </button>
+
+                {mergeList.length > 0 && (
+                  <button
+                    onClick={handleSaveMergeSpec}
+                    className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-violet-50 text-slate-700 hover:text-violet-600 border border-slate-200 text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Save Report</span>
+                  </button>
+                )}
+              </div>
+
+              {mergeList.length === 0 ? (
+                <div
+                  onClick={() => mergeInputRef.current?.click()}
+                  className="p-12 sm:p-16 rounded-2xl border-2 border-dashed border-slate-200 hover:border-violet-400 bg-slate-50 hover:bg-violet-50/30 text-center cursor-pointer transition-all"
+                >
+                  <div className="w-16 h-16 rounded-2xl bg-violet-100 text-violet-600 flex items-center justify-center mx-auto mb-4 shadow-inner">
+                    <Layers className="w-8 h-8" />
+                  </div>
+                  <p className="text-base font-bold text-slate-900 mb-1">
+                    Select two or more PDF files to combine
+                  </p>
+                  <p className="text-xs text-slate-500">
+                    Order can be arranged before merging
                   </p>
                 </div>
-                <button
-                  onClick={() => setSplitFile(null)}
-                  className="text-red-500 hover:underline font-bold"
-                >
-                  Choose Different File
-                </button>
-              </div>
+              ) : (
+                <div className="space-y-2.5">
+                  {mergeList.map((item, idx) => (
+                    <div
+                      key={item.id}
+                      className="p-3.5 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between shadow-sm"
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <span className="w-6 h-6 rounded-full bg-violet-100 text-violet-700 font-bold text-xs flex items-center justify-center shrink-0">
+                          {idx + 1}
+                        </span>
+                        <div className="truncate">
+                          <p className="font-semibold text-sm text-slate-900 truncate">
+                            {item.name}
+                          </p>
+                          <p className="text-xs text-slate-500">
+                            {item.pageCount} pages · {(item.size / 1024).toFixed(1)} KB
+                          </p>
+                        </div>
+                      </div>
 
-              <div className="space-y-2">
-                <label className="text-slate-900 dark:text-slate-100 font-bold block">
-                  PAGE RANGE TO EXTRACT (e.g. &quot;1-3&quot; or &quot;1, 4, 7-9&quot;)
-                </label>
-                <input
-                  type="text"
-                  value={pageRange}
-                  onChange={(e) => setPageRange(e.target.value)}
-                  placeholder={`1-${splitFile.pageCount}`}
-                  className="w-full bg-paper dark:bg-ink border border-graphite/40 rounded px-3 py-2 text-sm focus:border-signal outline-none font-mono text-slate-900 dark:text-paper font-semibold"
-                />
-              </div>
+                      <div className="flex items-center gap-1 shrink-0">
+                        <button
+                          onClick={() => {
+                            if (idx === 0) return;
+                            const copy = [...mergeList];
+                            const t = copy[idx];
+                            copy[idx] = copy[idx - 1];
+                            copy[idx - 1] = t;
+                            setMergeList(copy);
+                          }}
+                          disabled={idx === 0}
+                          className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-white disabled:opacity-20"
+                          title="Move up"
+                        >
+                          <MoveUp className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => {
+                            if (idx === mergeList.length - 1) return;
+                            const copy = [...mergeList];
+                            const t = copy[idx];
+                            copy[idx] = copy[idx + 1];
+                            copy[idx + 1] = t;
+                            setMergeList(copy);
+                          }}
+                          disabled={idx === mergeList.length - 1}
+                          className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-white disabled:opacity-20"
+                          title="Move down"
+                        >
+                          <MoveDown className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => setMergeList(mergeList.filter((_, i) => i !== idx))}
+                          className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg ml-1"
+                          title="Remove"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
 
-              <div className="flex flex-wrap items-center gap-3 pt-2">
-                <button
-                  onClick={handleSaveSplitSpec}
-                  className="px-4 py-3 rounded bg-paper dark:bg-ink border-2 border-signal text-slate-950 dark:text-paper font-bold font-mono text-xs shadow-sm flex items-center justify-center gap-2 hover:bg-signal/10 transition-colors"
+                  <button
+                    onClick={executeMerge}
+                    disabled={mergeList.length < 2 || isProcessing}
+                    className="w-full mt-4 py-3.5 rounded-xl bg-violet-600 hover:bg-violet-700 active:bg-violet-800 disabled:opacity-50 text-white font-semibold text-sm transition-all shadow-sm flex items-center justify-center gap-2"
+                  >
+                    <FileDown className="w-4 h-4" />
+                    <span>{isProcessing ? "Merging PDFs..." : `Merge & Download (${mergeList.length} files)`}</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            /* SPLIT TAB */
+            <div className="space-y-4">
+              <input
+                type="file"
+                ref={splitInputRef}
+                onChange={(e) => handleSplitFile(e.target.files)}
+                accept="application/pdf"
+                className="hidden"
+              />
+
+              {!splitFile ? (
+                <div
+                  onClick={() => splitInputRef.current?.click()}
+                  className="p-12 sm:p-16 rounded-2xl border-2 border-dashed border-slate-200 hover:border-violet-400 bg-slate-50 hover:bg-violet-50/30 text-center cursor-pointer transition-all"
                 >
-                  <Save className="w-4 h-4 text-signal" />
-                  <span>SAVE SPEC SHEET</span>
-                </button>
-                <button
-                  onClick={executeSplit}
-                  disabled={isProcessing}
-                  className="flex-1 py-3 rounded bg-signal hover:bg-signal-hover text-slate-950 font-bold font-mono text-xs shadow-sm flex items-center justify-center gap-2 transition-colors"
-                >
-                  <FileDown className="w-4 h-4" />
-                  <span>{isProcessing ? "EXTRACTING PAGES..." : "EXTRACT & DOWNLOAD NEW PDF"}</span>
-                </button>
-              </div>
+                  <div className="w-16 h-16 rounded-2xl bg-violet-100 text-violet-600 flex items-center justify-center mx-auto mb-4 shadow-inner">
+                    <Scissors className="w-8 h-8" />
+                  </div>
+                  <p className="text-base font-bold text-slate-900 mb-1">
+                    Select a PDF to extract pages
+                  </p>
+                  <p className="text-xs text-slate-500">
+                    Click to browse your device
+                  </p>
+                </div>
+              ) : (
+                <div className="p-6 rounded-2xl border border-slate-200 bg-slate-50 space-y-4">
+                  <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+                    <div>
+                      <p className="font-bold text-sm text-slate-900 truncate max-w-xs">{splitFile.name}</p>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        Total Pages: {splitFile.pageCount} · {(splitFile.size / 1024).toFixed(1)} KB
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => setSplitFile(null)}
+                      className="text-xs text-violet-600 hover:text-violet-800 font-semibold underline"
+                    >
+                      Change File
+                    </button>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold uppercase text-slate-700 tracking-wider block">
+                      Page Range to Extract (e.g. &quot;1-3&quot; or &quot;1, 3, 5&quot;)
+                    </label>
+                    <input
+                      type="text"
+                      value={pageRange}
+                      onChange={(e) => setPageRange(e.target.value)}
+                      placeholder={`1-${splitFile.pageCount}`}
+                      className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:border-violet-500 focus:ring-2 focus:ring-violet-100 outline-none text-slate-900 font-medium"
+                    />
+                  </div>
+
+                  <div className="flex gap-3 pt-2">
+                    <button
+                      onClick={executeSplit}
+                      disabled={isProcessing}
+                      className="flex-1 py-3.5 rounded-xl bg-violet-600 hover:bg-violet-700 active:bg-violet-800 text-white font-semibold text-sm shadow-sm flex items-center justify-center gap-2 transition-all"
+                    >
+                      <FileDown className="w-4 h-4" />
+                      <span>{isProcessing ? "Extracting..." : "Extract & Download PDF"}</span>
+                    </button>
+                    <button
+                      onClick={handleSaveSplitSpec}
+                      className="px-4 py-3.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 font-semibold text-sm flex items-center justify-center gap-1.5 transition-colors"
+                    >
+                      <Download className="w-4 h-4" />
+                      <span>Save Report</span>
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

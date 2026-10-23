@@ -75,15 +75,15 @@ export default function PercentageCalculatorPage() {
         <div>
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 dark:text-slate-200 hover:text-signal mb-1 transition-colors font-semibold"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 text-slate-800 hover:text-signal mb-1 transition-colors font-semibold"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>BACK TO UTILITY WORKBENCH</span>
           </Link>
-          <h1 className="font-display font-extrabold text-2xl text-slate-900 dark:text-paper">
+          <h1 className="font-display font-extrabold text-2xl text-slate-900 text-slate-900">
             Percentage Utility Workbench
           </h1>
-          <p className="font-mono text-xs text-slate-800 dark:text-slate-300 font-medium">
+          <p className="font-mono text-xs text-slate-800 text-slate-800 font-medium">
             Four targeted calculators for direct percentages, proportion ratios, delta changes, and retail discounts.
           </p>
         </div>
@@ -101,7 +101,7 @@ export default function PercentageCalculatorPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono text-xs">
         {/* Module 1 */}
         <div className="p-5 rounded-lg border border-graphite/30 bg-card-bg space-y-3">
-          <span className="font-bold text-ink dark:text-paper block pb-2 border-b border-graphite/20">
+          <span className="font-bold text-slate-900 text-slate-900 block pb-2 border-b border-graphite/20">
             1. WHAT IS X% OF Y?
           </span>
           <div className="flex items-center gap-2">
@@ -110,26 +110,26 @@ export default function PercentageCalculatorPage() {
               type="number"
               value={m1X}
               onChange={(e) => setM1X(e.target.value)}
-              className="w-20 p-2 rounded border border-graphite/30 bg-paper dark:bg-ink text-center font-bold"
+              className="w-20 p-2 rounded border border-graphite/30 bg-white bg-white text-center font-bold"
             />
             <span>% of</span>
             <input
               type="number"
               value={m1Y}
               onChange={(e) => setM1Y(e.target.value)}
-              className="w-24 p-2 rounded border border-graphite/30 bg-paper dark:bg-ink text-center font-bold"
+              className="w-24 p-2 rounded border border-graphite/30 bg-white bg-white text-center font-bold"
             />
             <span>?</span>
           </div>
           <div className="pt-2 flex items-center justify-between">
-            <span className="text-graphite">Computed Result:</span>
+            <span className="text-slate-700">Computed Result:</span>
             <span className="text-xl font-bold text-signal">{calcM1()}</span>
           </div>
         </div>
 
         {/* Module 2 */}
         <div className="p-5 rounded-lg border border-graphite/30 bg-card-bg space-y-3">
-          <span className="font-bold text-ink dark:text-paper block pb-2 border-b border-graphite/20">
+          <span className="font-bold text-slate-900 text-slate-900 block pb-2 border-b border-graphite/20">
             2. X IS WHAT % OF Y?
           </span>
           <div className="flex items-center gap-2">
@@ -137,26 +137,26 @@ export default function PercentageCalculatorPage() {
               type="number"
               value={m2X}
               onChange={(e) => setM2X(e.target.value)}
-              className="w-20 p-2 rounded border border-graphite/30 bg-paper dark:bg-ink text-center font-bold"
+              className="w-20 p-2 rounded border border-graphite/30 bg-white bg-white text-center font-bold"
             />
             <span>is what % of</span>
             <input
               type="number"
               value={m2Y}
               onChange={(e) => setM2Y(e.target.value)}
-              className="w-24 p-2 rounded border border-graphite/30 bg-paper dark:bg-ink text-center font-bold"
+              className="w-24 p-2 rounded border border-graphite/30 bg-white bg-white text-center font-bold"
             />
             <span>?</span>
           </div>
           <div className="pt-2 flex items-center justify-between">
-            <span className="text-graphite">Computed Ratio:</span>
+            <span className="text-slate-700">Computed Ratio:</span>
             <span className="text-xl font-bold text-signal">{calcM2()}</span>
           </div>
         </div>
 
         {/* Module 3 */}
         <div className="p-5 rounded-lg border border-graphite/30 bg-card-bg space-y-3">
-          <span className="font-bold text-ink dark:text-paper block pb-2 border-b border-graphite/20">
+          <span className="font-bold text-slate-900 text-slate-900 block pb-2 border-b border-graphite/20">
             3. PERCENTAGE CHANGE (DELTA)
           </span>
           <div className="flex items-center gap-2">
@@ -165,25 +165,25 @@ export default function PercentageCalculatorPage() {
               type="number"
               value={m3X}
               onChange={(e) => setM3X(e.target.value)}
-              className="w-24 p-2 rounded border border-graphite/30 bg-paper dark:bg-ink text-center font-bold"
+              className="w-24 p-2 rounded border border-graphite/30 bg-white bg-white text-center font-bold"
             />
             <span>to</span>
             <input
               type="number"
               value={m3Y}
               onChange={(e) => setM3Y(e.target.value)}
-              className="w-24 p-2 rounded border border-graphite/30 bg-paper dark:bg-ink text-center font-bold"
+              className="w-24 p-2 rounded border border-graphite/30 bg-white bg-white text-center font-bold"
             />
           </div>
           <div className="pt-2 flex items-center justify-between">
-            <span className="text-graphite">Net Difference:</span>
+            <span className="text-slate-700">Net Difference:</span>
             <span className="text-xl font-bold text-wire">{calcM3()}</span>
           </div>
         </div>
 
         {/* Module 4 */}
         <div className="p-5 rounded-lg border border-graphite/30 bg-card-bg space-y-3">
-          <span className="font-bold text-ink dark:text-paper block pb-2 border-b border-graphite/20">
+          <span className="font-bold text-slate-900 text-slate-900 block pb-2 border-b border-graphite/20">
             4. DISCOUNT &amp; FINAL PRICE
           </span>
           <div className="flex items-center gap-2">
@@ -192,21 +192,21 @@ export default function PercentageCalculatorPage() {
               type="number"
               value={m4X}
               onChange={(e) => setM4X(e.target.value)}
-              className="w-24 p-2 rounded border border-graphite/30 bg-paper dark:bg-ink text-center font-bold"
+              className="w-24 p-2 rounded border border-graphite/30 bg-white bg-white text-center font-bold"
             />
             <span>Discount:</span>
             <input
               type="number"
               value={m4Y}
               onChange={(e) => setM4Y(e.target.value)}
-              className="w-16 p-2 rounded border border-graphite/30 bg-paper dark:bg-ink text-center font-bold"
+              className="w-16 p-2 rounded border border-graphite/30 bg-white bg-white text-center font-bold"
             />
             <span>%</span>
           </div>
-          <div className="pt-2 flex items-center justify-between text-graphite">
+          <div className="pt-2 flex items-center justify-between text-slate-700">
             <span>Savings: ${m4Result.savings}</span>
             <div className="text-right">
-              <span className="text-xs text-graphite block">Final:</span>
+              <span className="text-xs text-slate-700 block">Final:</span>
               <span className="text-xl font-bold text-signal">${m4Result.finalPrice}</span>
             </div>
           </div>

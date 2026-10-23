@@ -109,15 +109,15 @@ export default function ImageCompressorPage() {
         <div>
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 dark:text-slate-200 hover:text-signal mb-1 transition-colors font-semibold"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 text-slate-800 hover:text-signal mb-1 transition-colors font-semibold"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>BACK TO UTILITY WORKBENCH</span>
           </Link>
-          <h1 className="font-display font-extrabold text-2xl text-slate-900 dark:text-paper">
+          <h1 className="font-display font-extrabold text-2xl text-slate-900 text-slate-900">
             Image Compressor &amp; Resizer
           </h1>
-          <p className="font-mono text-xs text-slate-800 dark:text-slate-300 font-medium">
+          <p className="font-mono text-xs text-slate-800 text-slate-800 font-medium">
             Real-time HTML5 Canvas compression, quality tuning, and dimensional downscaling.
           </p>
         </div>
@@ -126,7 +126,7 @@ export default function ImageCompressorPage() {
           <div className="flex items-center gap-2">
             <button
               onClick={handleSaveSpec}
-              className="px-3.5 py-2 rounded bg-paper dark:bg-ink border-2 border-signal text-slate-950 dark:text-paper font-mono font-bold text-xs flex items-center gap-1.5 shadow-sm hover:bg-signal/10 transition-colors"
+              className="px-3.5 py-2 rounded bg-white bg-white border-2 border-signal text-slate-950 text-slate-900 font-mono font-bold text-xs flex items-center gap-1.5 shadow-sm hover:bg-signal/10 transition-colors"
               title="Save date-stamped compression spec sheet"
             >
               <Save className="w-3.5 h-3.5 text-signal" />
@@ -156,18 +156,18 @@ export default function ImageCompressorPage() {
           onClick={() => fileInputRef.current?.click()}
           className="p-16 rounded-xl border-2 border-dashed border-graphite/40 hover:border-signal text-center cursor-pointer bg-card-bg/60 transition-colors"
         >
-          <Upload className="w-12 h-12 text-slate-700 dark:text-slate-300 mx-auto mb-3 opacity-60" />
-          <p className="font-display font-bold text-base text-slate-900 dark:text-paper">
+          <Upload className="w-12 h-12 text-slate-700 text-slate-800 mx-auto mb-3 opacity-60" />
+          <p className="font-display font-bold text-base text-slate-900 text-slate-900">
             Drop an image here to compress
           </p>
-          <p className="font-mono text-xs text-slate-700 dark:text-slate-300 mt-1 font-medium">Supports JPEG, PNG, WEBP</p>
+          <p className="font-mono text-xs text-slate-700 text-slate-800 mt-1 font-medium">Supports JPEG, PNG, WEBP</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Controls */}
           <div className="lg:col-span-5 p-5 rounded-lg border border-graphite/40 bg-card-bg space-y-4 font-mono text-xs shadow-sm">
             <div className="flex items-center justify-between pb-3 border-b border-graphite/20">
-              <span className="font-bold text-slate-900 dark:text-paper truncate max-w-[200px]">
+              <span className="font-bold text-slate-900 text-slate-900 truncate max-w-[200px]">
                 {file.name}
               </span>
               <button
@@ -183,7 +183,7 @@ export default function ImageCompressorPage() {
 
             {/* Metrics Comparison */}
             <div className="p-3 rounded bg-graphite/10 border border-graphite/30 space-y-1.5 font-bold">
-              <div className="flex justify-between text-slate-800 dark:text-slate-200">
+              <div className="flex justify-between text-slate-800 text-slate-800">
                 <span>Original Size:</span>
                 <span>{(originalSize / 1024).toFixed(1)} KB</span>
               </div>
@@ -203,7 +203,7 @@ export default function ImageCompressorPage() {
 
             {/* Quality Slider */}
             <div className="space-y-1">
-              <div className="flex justify-between text-slate-900 dark:text-slate-100 font-bold">
+              <div className="flex justify-between text-slate-900 text-slate-800 font-bold">
                 <span>COMPRESSION QUALITY</span>
                 <span className="text-signal font-extrabold">{quality}%</span>
               </div>
@@ -219,7 +219,7 @@ export default function ImageCompressorPage() {
 
             {/* Max Width */}
             <div className="space-y-1">
-              <div className="flex justify-between text-slate-900 dark:text-slate-100 font-bold">
+              <div className="flex justify-between text-slate-900 text-slate-800 font-bold">
                 <span>MAX DIMENSION BOUND</span>
                 <span className="text-signal font-extrabold">{maxWidth}px</span>
               </div>

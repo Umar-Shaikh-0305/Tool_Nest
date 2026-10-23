@@ -107,15 +107,15 @@ export default function StorageConverterPage() {
         <div>
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 dark:text-slate-200 hover:text-signal mb-1 transition-colors font-semibold"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 text-slate-800 hover:text-signal mb-1 transition-colors font-semibold"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>BACK TO UTILITY WORKBENCH</span>
           </Link>
-          <h1 className="font-display font-extrabold text-2xl text-slate-900 dark:text-paper">
+          <h1 className="font-display font-extrabold text-2xl text-slate-900 text-slate-900">
             Digital Storage Unit Converter
           </h1>
-          <p className="font-mono text-xs text-slate-800 dark:text-slate-300 font-medium">
+          <p className="font-mono text-xs text-slate-800 text-slate-800 font-medium">
             Real-time multi-unit matrix comparing IEC Binary (1024-based) vs SI Decimal (1000-based) standards.
           </p>
         </div>
@@ -127,8 +127,8 @@ export default function StorageConverterPage() {
               onClick={() => setStandard("binary")}
               className={`px-3 py-1.5 rounded text-xs font-mono ${
                 standard === "binary"
-                  ? "bg-blueprint text-paper font-extrabold border border-signal shadow-sm"
-                  : "text-slate-800 dark:text-slate-200 hover:text-signal font-semibold"
+                  ? "bg-violet-600 text-white font-extrabold border border-signal shadow-sm"
+                  : "text-slate-800 text-slate-800 hover:text-signal font-semibold"
               }`}
             >
               IEC Binary (1024)
@@ -137,8 +137,8 @@ export default function StorageConverterPage() {
               onClick={() => setStandard("decimal")}
               className={`px-3 py-1.5 rounded text-xs font-mono ${
                 standard === "decimal"
-                  ? "bg-blueprint text-paper font-extrabold border border-signal shadow-sm"
-                  : "text-slate-800 dark:text-slate-200 hover:text-signal font-semibold"
+                  ? "bg-violet-600 text-white font-extrabold border border-signal shadow-sm"
+                  : "text-slate-800 text-slate-800 hover:text-signal font-semibold"
               }`}
             >
               SI Decimal (1000)
@@ -157,10 +157,10 @@ export default function StorageConverterPage() {
       </div>
 
       {/* Info Technical Callout */}
-      <div className="p-4 rounded-lg border border-blueprint/30 bg-blueprint/5 dark:bg-blueprint/20 text-xs font-mono text-graphite dark:text-gray-300 flex items-start gap-3">
+      <div className="p-4 rounded-lg border border-blueprint/30 bg-blueprint/5 dark:bg-blueprint/20 text-xs font-mono text-slate-700 text-slate-700 flex items-start gap-3">
         <Info className="w-4 h-4 text-signal flex-shrink-0 mt-0.5" />
         <div className="space-y-1">
-          <p className="font-semibold text-ink dark:text-paper">
+          <p className="font-semibold text-slate-900 text-slate-900">
             {standard === "binary" ? "IEC Binary Standard (Power of 2 / 1024)" : "SI Decimal Standard (Power of 10 / 1000)"}
           </p>
           <p className="text-[11px] leading-relaxed">
@@ -189,17 +189,17 @@ export default function StorageConverterPage() {
             >
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs font-bold text-ink dark:text-paper">
+                  <span className="font-mono text-xs font-bold text-slate-900 text-slate-900">
                     {unit.name}
                   </span>
-                  <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-graphite/10 text-graphite dark:text-gray-300">
+                  <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-graphite/10 text-slate-700 text-slate-700">
                     {displaySymbol}
                   </span>
                 </div>
 
                 <button
                   onClick={() => handleCopy(unit.id, val)}
-                  className="p-1 rounded text-graphite hover:text-signal focus:outline-none"
+                  className="p-1 rounded text-slate-700 hover:text-signal focus:outline-none"
                   title="Copy value"
                 >
                   {copiedId === unit.id ? (
@@ -227,13 +227,13 @@ export default function StorageConverterPage() {
                     setActiveUnit(unit.id);
                     setInputValue(e.target.value);
                   }}
-                  className={`w-full font-mono text-base px-3 py-2 rounded border bg-paper dark:bg-ink text-ink dark:text-paper focus:outline-none focus:border-signal ${
+                  className={`w-full font-mono text-base px-3 py-2 rounded border bg-white bg-white text-slate-900 text-slate-900 focus:outline-none focus:border-signal ${
                     isSelected ? "border-signal font-bold" : "border-graphite/20"
                   }`}
                 />
               </div>
 
-              <div className="mt-2 flex items-center justify-between text-[10px] font-mono text-graphite dark:text-gray-400">
+              <div className="mt-2 flex items-center justify-between text-[10px] font-mono text-slate-700 text-slate-700">
                 <span>
                   {unit.id === "b"
                     ? "1/8 Byte"
@@ -261,7 +261,7 @@ export default function StorageConverterPage() {
             setActiveUnit("GB");
             setInputValue("1");
           }}
-          className="flex items-center gap-1.5 px-4 py-2 rounded border border-graphite/30 hover:border-signal text-graphite hover:text-signal font-mono text-xs transition-colors"
+          className="flex items-center gap-1.5 px-4 py-2 rounded border border-graphite/30 hover:border-signal text-slate-700 hover:text-signal font-mono text-xs transition-colors"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>RESET TO 1 GB</span>

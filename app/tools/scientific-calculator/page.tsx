@@ -158,22 +158,22 @@ export default function ScientificCalculatorPage() {
         <div>
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 dark:text-slate-200 hover:text-signal mb-1 transition-colors font-semibold"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 text-slate-800 hover:text-signal mb-1 transition-colors font-semibold"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>BACK TO UTILITY WORKBENCH</span>
           </Link>
-          <h1 className="font-display font-extrabold text-2xl text-slate-900 dark:text-paper">
+          <h1 className="font-display font-extrabold text-2xl text-slate-900 text-slate-900">
             Precision Scientific Calculator
           </h1>
-          <p className="font-mono text-xs text-slate-800 dark:text-slate-300 font-medium">
+          <p className="font-mono text-xs text-slate-800 text-slate-800 font-medium">
             Safe mathematical expression parsing with math.js, full trigonometric set, memory registers, and calculation ledger.
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-2">
-            <span className="font-mono text-xs text-slate-900 dark:text-slate-100 font-bold">ANGLE MODE:</span>
+            <span className="font-mono text-xs text-slate-900 text-slate-800 font-bold">ANGLE MODE:</span>
             <button
               onClick={() => setIsRad(!isRad)}
               className="px-2.5 py-1 rounded border border-graphite/40 font-mono text-xs font-bold text-signal bg-signal/15 hover:border-signal transition-colors"
@@ -198,7 +198,7 @@ export default function ScientificCalculatorPage() {
         <div className="lg:col-span-8 space-y-4">
           {/* Scientific Terminal Display */}
           <div className="p-5 rounded-lg border border-graphite/40 bg-card-bg shadow-sm space-y-2">
-            <div className="flex items-center justify-between text-[10px] font-mono text-graphite">
+            <div className="flex items-center justify-between text-[10px] font-mono text-slate-700">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-wire inline-block" />
                 <span>MATH ENGINE: ACTIVE</span>
@@ -219,7 +219,7 @@ export default function ScientificCalculatorPage() {
               onChange={(e) => setExpression(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Enter equation (e.g. sin(45) + sqrt(144) * 2^3)..."
-              className="w-full text-right font-mono text-xl sm:text-2xl bg-transparent text-ink dark:text-paper outline-none border-b border-graphite/20 pb-2 focus:border-signal tracking-wide"
+              className="w-full text-right font-mono text-xl sm:text-2xl bg-transparent text-slate-900 text-slate-900 outline-none border-b border-graphite/20 pb-2 focus:border-signal tracking-wide"
             />
 
             {/* Result Line */}
@@ -228,7 +228,7 @@ export default function ScientificCalculatorPage() {
                 type="button"
                 onClick={copyResult}
                 disabled={!result || result === "Syntax Error"}
-                className="text-xs font-mono text-graphite hover:text-signal disabled:opacity-30 flex items-center gap-1"
+                className="text-xs font-mono text-slate-700 hover:text-signal disabled:opacity-30 flex items-center gap-1"
               >
                 {copied ? <Check className="w-3.5 h-3.5 text-wire" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copied ? "Copied" : "Copy Result"}</span>
@@ -505,7 +505,7 @@ export default function ScientificCalculatorPage() {
               </button>
               <button
                 onClick={evaluateExpression}
-                className="py-3 rounded bg-signal hover:bg-signal-hover text-ink font-extrabold text-base transition-colors shadow-sm"
+                className="py-3 rounded bg-signal hover:bg-signal-hover text-slate-900 font-extrabold text-base transition-colors shadow-sm"
               >
                 =
               </button>
@@ -516,7 +516,7 @@ export default function ScientificCalculatorPage() {
         {/* Right Column: Calculation History Ledger */}
         <div className="lg:col-span-4 p-4 rounded-lg border border-graphite/30 bg-card-bg flex flex-col h-[520px]">
           <div className="flex items-center justify-between pb-3 border-b border-graphite/20 mb-3">
-            <div className="flex items-center gap-1.5 font-mono text-xs font-semibold text-ink dark:text-paper">
+            <div className="flex items-center gap-1.5 font-mono text-xs font-semibold text-slate-900 text-slate-900">
               <History className="w-3.5 h-3.5 text-signal" />
               <span>CALCULATION LEDGER</span>
             </div>
@@ -533,7 +533,7 @@ export default function ScientificCalculatorPage() {
 
           <div className="flex-1 overflow-y-auto space-y-2 pr-1">
             {history.length === 0 ? (
-              <div className="text-center py-12 text-graphite font-mono text-xs">
+              <div className="text-center py-12 text-slate-700 font-mono text-xs">
                 No calculation recorded yet.
               </div>
             ) : (
@@ -547,11 +547,11 @@ export default function ScientificCalculatorPage() {
                   className="p-2.5 rounded border border-graphite/20 hover:border-signal bg-graphite/5 cursor-pointer font-mono text-xs space-y-1 transition-all"
                   title="Click to recall this expression"
                 >
-                  <div className="flex items-center justify-between text-[10px] text-graphite">
+                  <div className="flex items-center justify-between text-[10px] text-slate-700">
                     <span>{entry.timestamp}</span>
                     <span className="text-wire hover:underline">Recall</span>
                   </div>
-                  <div className="text-graphite dark:text-gray-400 truncate">
+                  <div className="text-slate-700 text-slate-700 truncate">
                     {entry.expression}
                   </div>
                   <div className="text-signal font-bold text-sm text-right">

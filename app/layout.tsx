@@ -1,57 +1,42 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
-import ChatbotWidget from "@/components/ChatbotWidget";
 
 export const metadata: Metadata = {
-  title: "ToolNest | Zero-Cost Technical Utility Workbench",
+  title: "ToolNest | Free Online Tools",
   description:
-    "Free multi-purpose utility hub running 100% on client-side and free-tier infrastructure. PDF tools, image studio, AI generators, scientific calculator, converters, and engineering utilities.",
+    "Free online tools for PDF, images, calculators, converters, generators and more. All tools run securely with isolated history saved under your personal ID.",
   keywords: [
-    "utility workbench",
-    "pdf merge",
-    "image to pdf",
-    "scientific calculator",
-    "storage converter",
-    "background remover",
-    "free online tools",
+    "free online tools", "pdf tools", "image tools",
+    "calculator", "converter", "generator", "toolnest"
   ],
-  authors: [{ name: "ToolNest Engineering" }],
   openGraph: {
-    title: "ToolNest | Technical Utility Workbench",
-    description: "Free multi-purpose utility hub. Zero cost, client-side execution, no paywalls.",
+    title: "ToolNest | Free Online Tools",
+    description: "Free online tools — PDF, images, calculators, converters, and more.",
     type: "website",
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen flex flex-col antialiased font-sans selection:bg-signal selection:text-ink">
+    <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+      </head>
+      <body className="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased">
         <Header />
         <main className="flex-1">{children}</main>
-
-        {/* Global Blueprint Footer */}
-        <footer className="border-t border-graphite/30 bg-paper dark:bg-ink py-8 px-4 text-center font-mono text-xs text-graphite dark:text-gray-400">
-          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-wire inline-block" />
-              <span>TOOLNEST INFRASTRUCTURE: 100% ZERO-COST TIER</span>
-            </div>
-            <div className="flex items-center gap-4 text-[11px]">
-              <span>POWERED BY NEXT.JS + SUPABASE + PUTER.JS + POLLINATIONS</span>
-              <span>·</span>
-              <span>NO PAID APIS</span>
-            </div>
+        <footer className="bg-white border-t border-slate-200 py-6 px-4 mt-12">
+          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-500">
+            <span className="font-semibold text-slate-700">ToolNest</span>
+            <span className="text-center">{new Date().getFullYear()} · Professional browser tools · Isolated history saved under your ID</span>
+            <span className="text-slate-400 text-xs">Fast &amp; Secure</span>
           </div>
         </footer>
-
-        {/* Global AI Assistant Drawer */}
-        <ChatbotWidget />
       </body>
     </html>
   );

@@ -125,15 +125,15 @@ export default function ColorPickerPage() {
         <div>
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 dark:text-slate-200 hover:text-signal mb-1 transition-colors font-semibold"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 text-slate-800 hover:text-signal mb-1 transition-colors font-semibold"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>BACK TO UTILITY WORKBENCH</span>
           </Link>
-          <h1 className="font-display font-extrabold text-2xl text-slate-900 dark:text-paper">
+          <h1 className="font-display font-extrabold text-2xl text-slate-900 text-slate-900">
             Color Matrix &amp; Harmonic Palettes
           </h1>
-          <p className="font-mono text-xs text-slate-800 dark:text-slate-300 font-medium">
+          <p className="font-mono text-xs text-slate-800 text-slate-800 font-medium">
             Precision color space translator (HEX, RGB, HSL) with automatic harmonic harmony generators.
           </p>
         </div>
@@ -141,7 +141,7 @@ export default function ColorPickerPage() {
         <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={handleEyedropper}
-            className="px-3.5 py-2 rounded border border-graphite/40 hover:border-signal text-slate-900 dark:text-slate-100 font-mono text-xs flex items-center gap-1.5 transition-colors font-bold bg-card-bg"
+            className="px-3.5 py-2 rounded border border-graphite/40 hover:border-signal text-slate-900 text-slate-800 font-mono text-xs flex items-center gap-1.5 transition-colors font-bold bg-card-bg"
           >
             <Pipette className="w-3.5 h-3.5" />
             <span>EYEDROPPER</span>
@@ -177,12 +177,12 @@ export default function ColorPickerPage() {
           <div className="space-y-2 pt-2">
             {/* Hex */}
             <div className="flex items-center justify-between p-2 rounded bg-graphite/5 border border-graphite/20">
-              <span className="text-graphite">HEX:</span>
+              <span className="text-slate-700">HEX:</span>
               <div className="flex items-center gap-2">
-                <span className="font-bold text-ink dark:text-paper">{hex}</span>
+                <span className="font-bold text-slate-900 text-slate-900">{hex}</span>
                 <button
                   onClick={() => copyVal(hex)}
-                  className="p-1 text-graphite hover:text-signal"
+                  className="p-1 text-slate-700 hover:text-signal"
                 >
                   {copiedText === hex ? <Check className="w-3.5 h-3.5 text-wire" /> : <Copy className="w-3.5 h-3.5" />}
                 </button>
@@ -191,14 +191,14 @@ export default function ColorPickerPage() {
 
             {/* RGB */}
             <div className="flex items-center justify-between p-2 rounded bg-graphite/5 border border-graphite/20">
-              <span className="text-graphite">RGB:</span>
+              <span className="text-slate-700">RGB:</span>
               <div className="flex items-center gap-2">
-                <span className="font-bold text-ink dark:text-paper">
+                <span className="font-bold text-slate-900 text-slate-900">
                   rgb({rgb.r}, {rgb.g}, {rgb.b})
                 </span>
                 <button
                   onClick={() => copyVal(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`)}
-                  className="p-1 text-graphite hover:text-signal"
+                  className="p-1 text-slate-700 hover:text-signal"
                 >
                   <Copy className="w-3.5 h-3.5" />
                 </button>
@@ -207,14 +207,14 @@ export default function ColorPickerPage() {
 
             {/* HSL */}
             <div className="flex items-center justify-between p-2 rounded bg-graphite/5 border border-graphite/20">
-              <span className="text-graphite">HSL:</span>
+              <span className="text-slate-700">HSL:</span>
               <div className="flex items-center gap-2">
-                <span className="font-bold text-ink dark:text-paper">
+                <span className="font-bold text-slate-900 text-slate-900">
                   hsl({hsl.h}, {hsl.s}%, {hsl.l}%)
                 </span>
                 <button
                   onClick={() => copyVal(`hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`)}
-                  className="p-1 text-graphite hover:text-signal"
+                  className="p-1 text-slate-700 hover:text-signal"
                 >
                   <Copy className="w-3.5 h-3.5" />
                 </button>
@@ -225,13 +225,13 @@ export default function ColorPickerPage() {
 
         {/* Harmonies */}
         <div className="md:col-span-6 p-6 rounded-lg border border-graphite/30 bg-card-bg space-y-4">
-          <span className="font-bold text-ink dark:text-paper block pb-2 border-b border-graphite/20">
+          <span className="font-bold text-slate-900 text-slate-900 block pb-2 border-b border-graphite/20">
             HARMONIC SCHEMES
           </span>
 
           {/* Complementary */}
           <div className="space-y-1">
-            <span className="text-[10px] text-graphite block">COMPLEMENTARY (180°)</span>
+            <span className="text-[10px] text-slate-700 block">COMPLEMENTARY (180°)</span>
             <div className="flex items-center gap-2">
               <div
                 className="w-8 h-8 rounded border border-graphite/30"
@@ -249,7 +249,7 @@ export default function ColorPickerPage() {
 
           {/* Analogous */}
           <div className="space-y-1 pt-2 border-t border-graphite/10">
-            <span className="text-[10px] text-graphite block">ANALOGOUS (±30°)</span>
+            <span className="text-[10px] text-slate-700 block">ANALOGOUS (±30°)</span>
             <div className="grid grid-cols-2 gap-2">
               <div className="flex items-center gap-2">
                 <div
@@ -270,7 +270,7 @@ export default function ColorPickerPage() {
 
           {/* Triadic */}
           <div className="space-y-1 pt-2 border-t border-graphite/10">
-            <span className="text-[10px] text-graphite block">TRIADIC (±120°)</span>
+            <span className="text-[10px] text-slate-700 block">TRIADIC (±120°)</span>
             <div className="grid grid-cols-2 gap-2">
               <div className="flex items-center gap-2">
                 <div

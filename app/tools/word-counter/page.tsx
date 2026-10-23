@@ -93,15 +93,15 @@ export default function WordCounterPage() {
         <div>
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 dark:text-slate-200 hover:text-signal mb-1 transition-colors font-semibold"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 text-slate-800 hover:text-signal mb-1 transition-colors font-semibold"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>BACK TO UTILITY WORKBENCH</span>
           </Link>
-          <h1 className="font-display font-extrabold text-2xl text-slate-900 dark:text-paper">
+          <h1 className="font-display font-extrabold text-2xl text-slate-900 text-slate-900">
             Word &amp; Text Analyzer
           </h1>
-          <p className="font-mono text-xs text-slate-800 dark:text-slate-300 font-medium">
+          <p className="font-mono text-xs text-slate-800 text-slate-800 font-medium">
             Real-time lexical density, readability timing, character distributions, and token analytics.
           </p>
         </div>
@@ -120,7 +120,7 @@ export default function WordCounterPage() {
           <button
             onClick={handleCopy}
             disabled={!text}
-            className="px-3 py-1.5 rounded border border-graphite/40 hover:border-signal text-slate-900 dark:text-slate-100 font-bold flex items-center gap-1 disabled:opacity-30 bg-card-bg"
+            className="px-3 py-1.5 rounded border border-graphite/40 hover:border-signal text-slate-900 text-slate-800 font-bold flex items-center gap-1 disabled:opacity-30 bg-card-bg"
           >
             {copied ? <Check className="w-3.5 h-3.5 text-wire" /> : <Copy className="w-3.5 h-3.5" />}
             <span>{copied ? "Copied" : "Copy Text"}</span>
@@ -139,27 +139,27 @@ export default function WordCounterPage() {
       {/* Primary Metrics Strip */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
         <div className="p-3 rounded-lg border border-graphite/30 bg-card-bg text-center font-mono">
-          <span className="text-[10px] text-graphite block">WORDS</span>
+          <span className="text-[10px] text-slate-700 block">WORDS</span>
           <span className="text-xl font-bold text-signal">{stats.words}</span>
         </div>
         <div className="p-3 rounded-lg border border-graphite/30 bg-card-bg text-center font-mono">
-          <span className="text-[10px] text-graphite block">CHARS</span>
-          <span className="text-xl font-bold text-ink dark:text-paper">{stats.characters}</span>
+          <span className="text-[10px] text-slate-700 block">CHARS</span>
+          <span className="text-xl font-bold text-slate-900 text-slate-900">{stats.characters}</span>
         </div>
         <div className="p-3 rounded-lg border border-graphite/30 bg-card-bg text-center font-mono">
-          <span className="text-[10px] text-graphite block">NO SPACES</span>
-          <span className="text-xl font-bold text-ink dark:text-paper">{stats.charactersNoSpaces}</span>
+          <span className="text-[10px] text-slate-700 block">NO SPACES</span>
+          <span className="text-xl font-bold text-slate-900 text-slate-900">{stats.charactersNoSpaces}</span>
         </div>
         <div className="p-3 rounded-lg border border-graphite/30 bg-card-bg text-center font-mono">
-          <span className="text-[10px] text-graphite block">SENTENCES</span>
-          <span className="text-xl font-bold text-ink dark:text-paper">{stats.sentences}</span>
+          <span className="text-[10px] text-slate-700 block">SENTENCES</span>
+          <span className="text-xl font-bold text-slate-900 text-slate-900">{stats.sentences}</span>
         </div>
         <div className="p-3 rounded-lg border border-graphite/30 bg-card-bg text-center font-mono">
-          <span className="text-[10px] text-graphite block">PARAGRAPHS</span>
-          <span className="text-xl font-bold text-ink dark:text-paper">{stats.paragraphs}</span>
+          <span className="text-[10px] text-slate-700 block">PARAGRAPHS</span>
+          <span className="text-xl font-bold text-slate-900 text-slate-900">{stats.paragraphs}</span>
         </div>
         <div className="p-3 rounded-lg border border-graphite/30 bg-card-bg text-center font-mono">
-          <span className="text-[10px] text-graphite block">READ TIME</span>
+          <span className="text-[10px] text-slate-700 block">READ TIME</span>
           <span className="text-xl font-bold text-wire">~{stats.readingTimeMinutes}m</span>
         </div>
       </div>
@@ -172,22 +172,22 @@ export default function WordCounterPage() {
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Paste or write your essay, technical document, or code snippet here for live lexical analysis..."
-            className="w-full p-4 rounded-lg border border-graphite/30 bg-card-bg text-ink dark:text-paper outline-none focus:border-signal font-mono text-xs leading-relaxed resize-none shadow-sm"
+            className="w-full p-4 rounded-lg border border-graphite/30 bg-card-bg text-slate-900 text-slate-900 outline-none focus:border-signal font-mono text-xs leading-relaxed resize-none shadow-sm"
           />
         </div>
 
         {/* Keywords side panel */}
         <div className="lg:col-span-3 p-4 rounded-lg border border-graphite/30 bg-card-bg space-y-3 font-mono text-xs">
-          <span className="font-bold text-ink dark:text-paper block pb-2 border-b border-graphite/20">
+          <span className="font-bold text-slate-900 text-slate-900 block pb-2 border-b border-graphite/20">
             TOP KEYWORDS
           </span>
           {stats.keywords.length === 0 ? (
-            <p className="text-graphite text-[11px]">Type text to calculate frequency.</p>
+            <p className="text-slate-700 text-[11px]">Type text to calculate frequency.</p>
           ) : (
             <div className="space-y-1.5">
               {stats.keywords.map((kw, i) => (
                 <div key={i} className="flex items-center justify-between text-[11px]">
-                  <span className="text-ink dark:text-paper">{kw.word}</span>
+                  <span className="text-slate-900 text-slate-900">{kw.word}</span>
                   <span className="px-1.5 py-0.2 rounded bg-signal/15 text-signal font-bold">
                     {kw.count}
                   </span>

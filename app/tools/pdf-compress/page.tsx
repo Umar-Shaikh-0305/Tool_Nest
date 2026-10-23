@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import Link from "next/link";
-import { ArrowLeft, Upload, FileDown, Check, ShieldCheck, AlertCircle, Save } from "lucide-react";
+import { ArrowLeft, Upload, FileDown, Check, ShieldCheck, Download, Trash2 } from "lucide-react";
 import { PDFDocument } from "pdf-lib";
 import { downloadTextReport } from "@/lib/export-utils";
 
@@ -29,7 +29,6 @@ export default function PdfCompressPage() {
 
     try {
       const buffer = await file.arrayBuffer();
-      // Load PDF and re-save with objects streams and cleanup
       const pdfDoc = await PDFDocument.load(buffer, { ignoreEncryption: true });
       const optimizedBytes = await pdfDoc.save({ useObjectStreams: true });
 
@@ -72,123 +71,137 @@ export default function PdfCompressPage() {
         "Optimized File Size": `${compKb} KB (${compressedSize ?? "N/A"} bytes)`,
         "Compression Reduction": reduction,
         "Engine": "pdf-lib Object Stream Linearization",
-        "Optimization Date": new Date().toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        }),
-        "Optimization Time": new Date().toLocaleTimeString("en-US"),
       }
     );
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-graphite/40 pb-4">
-        <div>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 dark:text-slate-200 hover:text-signal mb-1 transition-colors font-semibold"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>BACK TO UTILITY WORKBENCH</span>
-          </Link>
-          <h1 className="font-display font-extrabold text-2xl text-slate-900 dark:text-paper">
-            PDF Optimizer &amp; Compressor
-          </h1>
-          <p className="font-mono text-xs text-slate-800 dark:text-slate-300 font-medium">
-            Browser-based object stream optimization and redundant element purging without cloud transmission.
-          </p>
-        </div>
-
-        {file && (
-          <button
-            onClick={handleSaveSpec}
-            className="px-3.5 py-2 rounded bg-paper dark:bg-ink border-2 border-signal text-slate-950 dark:text-paper font-mono font-bold text-xs flex items-center gap-1.5 shadow-sm hover:bg-signal/10 transition-colors"
-          >
-            <Save className="w-3.5 h-3.5 text-signal" />
-            <span>SAVE SPEC</span>
-          </button>
-        )}
-      </div>
-
-      <input
-        type="file"
-        ref={inputRef}
-        onChange={(e) => handleSelectFile(e.target.files)}
-        accept="application/pdf"
-        className="hidden"
-      />
-
-      {!file ? (
-        <div
-          onClick={() => inputRef.current?.click()}
-          className="p-16 rounded-xl border-2 border-dashed border-graphite/40 hover:border-signal text-center cursor-pointer bg-card-bg/60 transition-colors"
+    <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl mx-auto space-y-6">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-violet-600 transition-colors font-medium"
         >
-          <Upload className="w-12 h-12 text-slate-700 dark:text-slate-300 mx-auto mb-3 opacity-60" />
-          <p className="font-display font-bold text-base text-slate-900 dark:text-paper">
-            Select or drop a PDF file to optimize
-          </p>
-          <p className="font-mono text-xs text-slate-700 dark:text-slate-300 mt-1 font-medium">Processed entirely in-memory</p>
-        </div>
-      ) : (
-        <div className="p-6 rounded-xl border border-graphite/40 bg-card-bg space-y-5 font-mono text-xs shadow-sm">
-          <div className="flex items-center justify-between pb-3 border-b border-graphite/20">
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back to Tools</span>
+        </Link>
+
+        <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
             <div>
-              <p className="font-bold text-sm text-slate-900 dark:text-paper">{file.name}</p>
-              <p className="text-slate-800 dark:text-slate-300 font-medium">Original Size: {(originalSize / 1024).toFixed(1)} KB</p>
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                PDF Compressor
+              </h1>
+              <p className="text-sm text-slate-500 mt-1">
+                Reduce PDF file size in your browser without any server upload.
+              </p>
             </div>
-            <button
-              onClick={() => {
-                setFile(null);
-                setCompressedSize(null);
-              }}
-              className="text-red-500 hover:underline font-bold"
-            >
-              Change File
-            </button>
+            {file && (
+              <button
+                onClick={handleSaveSpec}
+                className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-violet-50 text-slate-700 hover:text-violet-600 border border-slate-200 text-xs font-semibold flex items-center gap-1.5 transition-colors"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Save Report</span>
+              </button>
+            )}
           </div>
 
-          {compressedSize !== null && (
-            <div className="p-4 rounded-lg bg-wire/15 border border-wire/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div>
-                <p className="font-extrabold text-wire-dark dark:text-wire text-sm">Optimization Complete!</p>
-                <p className="text-slate-900 dark:text-slate-100 font-bold mt-1">
-                  New Size: {(compressedSize / 1024).toFixed(1)} KB (
-                  {(((originalSize - compressedSize) / originalSize) * 100).toFixed(1)}% reduction)
-                </p>
+          <input
+            type="file"
+            ref={inputRef}
+            onChange={(e) => handleSelectFile(e.target.files)}
+            accept="application/pdf"
+            className="hidden"
+          />
+
+          {!file ? (
+            <div
+              onClick={() => inputRef.current?.click()}
+              className="p-12 sm:p-16 rounded-2xl border-2 border-dashed border-slate-200 hover:border-violet-400 bg-slate-50 hover:bg-violet-50/30 text-center cursor-pointer transition-all"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-violet-100 text-violet-600 flex items-center justify-center mx-auto mb-4 shadow-inner">
+                <Upload className="w-8 h-8" />
               </div>
-              <div className="flex items-center gap-2">
+              <p className="text-base font-bold text-slate-900 mb-1">
+                Choose a PDF file or drag it here
+              </p>
+              <p className="text-xs text-slate-500">
+                100% private in-memory compression via pdf-lib
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-5">
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+                <div>
+                  <p className="font-bold text-sm text-slate-900 truncate max-w-xs">{file.name}</p>
+                  <p className="text-xs text-slate-500 mt-0.5">Original Size: {(originalSize / 1024).toFixed(1)} KB</p>
+                </div>
                 <button
-                  onClick={handleSaveSpec}
-                  className="px-3.5 py-2 rounded bg-paper dark:bg-ink border-2 border-signal text-slate-950 dark:text-paper font-bold font-mono text-xs flex items-center gap-1.5 shadow-sm hover:bg-signal/10"
+                  onClick={() => {
+                    setFile(null);
+                    setCompressedSize(null);
+                    setCompressedBlob(null);
+                  }}
+                  className="p-2 text-slate-400 hover:text-red-500 rounded-lg hover:bg-red-50 transition-colors"
+                  title="Remove file"
                 >
-                  <Save className="w-4 h-4 text-signal" />
-                  <span>SAVE SPEC</span>
+                  <Trash2 className="w-4 h-4" />
                 </button>
+              </div>
+
+              {compressedSize !== null && (
+                <div className="p-5 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-4">
+                  <div className="flex items-center gap-2 text-emerald-800 font-bold text-sm">
+                    <Check className="w-5 h-5 text-emerald-600" />
+                    <span>Optimization Complete!</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3 text-center">
+                    <div className="p-3 bg-white rounded-xl border border-emerald-100">
+                      <p className="text-xs text-slate-500">Optimized Size</p>
+                      <p className="text-lg font-extrabold text-slate-900">{(compressedSize / 1024).toFixed(1)} KB</p>
+                    </div>
+                    <div className="p-3 bg-white rounded-xl border border-emerald-100">
+                      <p className="text-xs text-slate-500">Size Reduction</p>
+                      <p className="text-lg font-extrabold text-emerald-600">
+                        {(((originalSize - compressedSize) / originalSize) * 100).toFixed(1)}%
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3 pt-2">
+                    <button
+                      onClick={handleDownload}
+                      className="flex-1 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm flex items-center justify-center gap-2 transition-colors shadow-sm"
+                    >
+                      <FileDown className="w-4 h-4" />
+                      <span>Download Compressed PDF</span>
+                    </button>
+                    <button
+                      onClick={handleSaveSpec}
+                      className="px-4 py-3 rounded-xl bg-white hover:bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold text-sm flex items-center justify-center gap-2 transition-colors"
+                    >
+                      <Download className="w-4 h-4" />
+                      <span>Save Report</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {compressedSize === null && (
                 <button
-                  onClick={handleDownload}
-                  className="px-4 py-2 rounded bg-signal hover:bg-signal-hover text-slate-950 font-bold font-mono text-xs flex items-center gap-1.5 shadow-sm"
+                  onClick={handleCompress}
+                  disabled={isProcessing}
+                  className="w-full py-3.5 rounded-xl bg-violet-600 hover:bg-violet-700 active:bg-violet-800 disabled:opacity-50 text-white font-semibold text-sm transition-all shadow-sm flex items-center justify-center gap-2"
                 >
                   <FileDown className="w-4 h-4" />
-                  <span>DOWNLOAD PDF</span>
+                  <span>{isProcessing ? "Optimizing PDF..." : "Compress PDF"}</span>
                 </button>
-              </div>
+              )}
             </div>
           )}
-
-          {compressedSize === null && (
-            <button
-              onClick={handleCompress}
-              disabled={isProcessing}
-              className="w-full py-3 rounded bg-signal hover:bg-signal-hover text-slate-950 font-bold font-mono text-xs shadow-sm flex items-center justify-center gap-2"
-            >
-              <FileDown className="w-4 h-4" />
-              <span>{isProcessing ? "OPTIMIZING OBJECT STREAMS..." : "OPTIMIZE & COMPRESS PDF"}</span>
-            </button>
-          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

@@ -77,15 +77,15 @@ export default function Base64ConverterPage() {
         <div>
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 dark:text-slate-200 hover:text-signal mb-1 transition-colors font-semibold"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 text-slate-800 hover:text-signal mb-1 transition-colors font-semibold"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>BACK TO UTILITY WORKBENCH</span>
           </Link>
-          <h1 className="font-display font-extrabold text-2xl text-slate-900 dark:text-paper">
+          <h1 className="font-display font-extrabold text-2xl text-slate-900 text-slate-900">
             Base64 Encoder &amp; Decoder
           </h1>
-          <p className="font-mono text-xs text-slate-800 dark:text-slate-300 font-medium">
+          <p className="font-mono text-xs text-slate-800 text-slate-800 font-medium">
             Bidirectional ASCII binary representation converter for strings and arbitrary binary payloads.
           </p>
         </div>
@@ -99,8 +99,8 @@ export default function Base64ConverterPage() {
             }}
             className={`px-3 py-1.5 rounded ${
               direction === "encode"
-                ? "bg-blueprint text-paper font-extrabold border border-signal shadow-sm"
-                : "text-slate-800 dark:text-slate-200 font-semibold"
+                ? "bg-violet-600 text-white font-extrabold border border-signal shadow-sm"
+                : "text-slate-800 text-slate-800 font-semibold"
             }`}
           >
             ENCODE (Text → Base64)
@@ -112,8 +112,8 @@ export default function Base64ConverterPage() {
             }}
             className={`px-3 py-1.5 rounded ${
               direction === "decode"
-                ? "bg-blueprint text-paper font-extrabold border border-signal shadow-sm"
-                : "text-slate-800 dark:text-slate-200 font-semibold"
+                ? "bg-violet-600 text-white font-extrabold border border-signal shadow-sm"
+                : "text-slate-800 text-slate-800 font-semibold"
             }`}
           >
             DECODE (Base64 → Text)
@@ -132,7 +132,7 @@ export default function Base64ConverterPage() {
         {/* Input */}
         <div className="p-4 rounded-lg border border-graphite/30 bg-card-bg space-y-3">
           <div className="flex items-center justify-between">
-            <span className="font-bold text-ink dark:text-paper">
+            <span className="font-bold text-slate-900 text-slate-900">
               {direction === "encode" ? "INPUT RAW STRING" : "INPUT BASE64 STRING"}
             </span>
             <label className="text-[11px] text-signal hover:underline cursor-pointer flex items-center gap-1">
@@ -155,21 +155,21 @@ export default function Base64ConverterPage() {
                 ? "Type or paste UTF-8 text to encode..."
                 : "Paste valid Base64 string to decode..."
             }
-            className="w-full p-3 rounded bg-paper dark:bg-ink text-ink dark:text-paper border border-graphite/30 focus:border-signal outline-none resize-none leading-relaxed"
+            className="w-full p-3 rounded bg-white bg-white text-slate-900 text-slate-900 border border-graphite/30 focus:border-signal outline-none resize-none leading-relaxed"
           />
         </div>
 
         {/* Output */}
         <div className="p-4 rounded-lg border border-graphite/30 bg-card-bg space-y-3">
           <div className="flex items-center justify-between">
-            <span className="font-bold text-ink dark:text-paper">
+            <span className="font-bold text-slate-900 text-slate-900">
               {direction === "encode" ? "BASE64 RESULT" : "DECODED RESULT"}
             </span>
             <div className="flex items-center gap-2">
               <button
                 onClick={handleDownloadOutput}
                 disabled={!outputText}
-                className="px-3 py-1 rounded bg-signal hover:bg-signal-hover text-ink font-bold flex items-center gap-1 disabled:opacity-30 transition-colors"
+                className="px-3 py-1 rounded bg-signal hover:bg-signal-hover text-slate-900 font-bold flex items-center gap-1 disabled:opacity-30 transition-colors"
                 title="Download output payload as text/spec file"
               >
                 <FileDown className="w-3.5 h-3.5" />
@@ -178,7 +178,7 @@ export default function Base64ConverterPage() {
               <button
                 onClick={handleCopy}
                 disabled={!outputText}
-                className="px-3 py-1 rounded border border-graphite/30 hover:border-signal text-graphite hover:text-signal font-bold flex items-center gap-1 disabled:opacity-30 transition-colors"
+                className="px-3 py-1 rounded border border-graphite/30 hover:border-signal text-slate-700 hover:text-signal font-bold flex items-center gap-1 disabled:opacity-30 transition-colors"
               >
                 {copied ? <Check className="w-3.5 h-3.5 text-wire" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>COPY</span>
@@ -191,7 +191,7 @@ export default function Base64ConverterPage() {
             readOnly
             value={outputText}
             placeholder="Result appears here automatically..."
-            className="w-full p-3 rounded bg-graphite/5 text-ink dark:text-paper border border-graphite/20 outline-none resize-none leading-relaxed font-bold"
+            className="w-full p-3 rounded bg-graphite/5 text-slate-900 text-slate-900 border border-graphite/20 outline-none resize-none leading-relaxed font-bold"
           />
         </div>
       </div>

@@ -69,15 +69,15 @@ export default function BmiCalculatorPage() {
         <div>
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 dark:text-slate-200 hover:text-signal mb-1 transition-colors font-semibold"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 text-slate-800 hover:text-signal mb-1 transition-colors font-semibold"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>BACK TO UTILITY WORKBENCH</span>
           </Link>
-          <h1 className="font-display font-extrabold text-2xl text-slate-900 dark:text-paper">
+          <h1 className="font-display font-extrabold text-2xl text-slate-900 text-slate-900">
             Body Mass Index (BMI) Analyzer
           </h1>
-          <p className="font-mono text-xs text-slate-800 dark:text-slate-300 font-medium">
+          <p className="font-mono text-xs text-slate-800 text-slate-800 font-medium">
             Biometric ratio index calculation with category classification and target ranges.
           </p>
         </div>
@@ -88,8 +88,8 @@ export default function BmiCalculatorPage() {
               onClick={() => setUnitSystem("metric")}
               className={`px-3 py-1.5 rounded ${
                 unitSystem === "metric"
-                  ? "bg-blueprint text-paper font-extrabold border border-signal shadow-sm"
-                  : "text-slate-800 dark:text-slate-200 font-semibold"
+                  ? "bg-violet-600 text-white font-extrabold border border-signal shadow-sm"
+                  : "text-slate-800 text-slate-800 font-semibold"
               }`}
             >
               Metric (cm/kg)
@@ -98,8 +98,8 @@ export default function BmiCalculatorPage() {
               onClick={() => setUnitSystem("imperial")}
               className={`px-3 py-1.5 rounded ${
                 unitSystem === "imperial"
-                  ? "bg-blueprint text-paper font-extrabold border border-signal shadow-sm"
-                  : "text-slate-800 dark:text-slate-200 font-semibold"
+                  ? "bg-violet-600 text-white font-extrabold border border-signal shadow-sm"
+                  : "text-slate-800 text-slate-800 font-semibold"
               }`}
             >
               Imperial (ft/lbs)
@@ -120,59 +120,59 @@ export default function BmiCalculatorPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 font-mono text-xs">
         <div className="md:col-span-6 p-6 rounded-lg border border-graphite/30 bg-card-bg space-y-4">
-          <span className="font-bold text-ink dark:text-paper block pb-2 border-b border-graphite/20">
+          <span className="font-bold text-slate-900 text-slate-900 block pb-2 border-b border-graphite/20">
             PHYSICAL PARAMETERS
           </span>
 
           {unitSystem === "metric" ? (
             <>
               <div className="space-y-1">
-                <label className="text-graphite block">HEIGHT (CM)</label>
+                <label className="text-slate-700 block">HEIGHT (CM)</label>
                 <input
                   type="number"
                   value={cm}
                   onChange={(e) => setCm(e.target.value)}
-                  className="w-full p-2.5 rounded border border-graphite/30 bg-paper dark:bg-ink text-sm font-bold"
+                  className="w-full p-2.5 rounded border border-graphite/30 bg-white bg-white text-sm font-bold"
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-graphite block">WEIGHT (KG)</label>
+                <label className="text-slate-700 block">WEIGHT (KG)</label>
                 <input
                   type="number"
                   value={kg}
                   onChange={(e) => setKg(e.target.value)}
-                  className="w-full p-2.5 rounded border border-graphite/30 bg-paper dark:bg-ink text-sm font-bold"
+                  className="w-full p-2.5 rounded border border-graphite/30 bg-white bg-white text-sm font-bold"
                 />
               </div>
             </>
           ) : (
             <>
               <div className="space-y-1">
-                <label className="text-graphite block">HEIGHT (FEET &amp; INCHES)</label>
+                <label className="text-slate-700 block">HEIGHT (FEET &amp; INCHES)</label>
                 <div className="grid grid-cols-2 gap-2">
                   <input
                     type="number"
                     value={feet}
                     onChange={(e) => setFeet(e.target.value)}
                     placeholder="Feet"
-                    className="p-2.5 rounded border border-graphite/30 bg-paper dark:bg-ink text-sm font-bold"
+                    className="p-2.5 rounded border border-graphite/30 bg-white bg-white text-sm font-bold"
                   />
                   <input
                     type="number"
                     value={inches}
                     onChange={(e) => setInches(e.target.value)}
                     placeholder="Inches"
-                    className="p-2.5 rounded border border-graphite/30 bg-paper dark:bg-ink text-sm font-bold"
+                    className="p-2.5 rounded border border-graphite/30 bg-white bg-white text-sm font-bold"
                   />
                 </div>
               </div>
               <div className="space-y-1">
-                <label className="text-graphite block">WEIGHT (LBS)</label>
+                <label className="text-slate-700 block">WEIGHT (LBS)</label>
                 <input
                   type="number"
                   value={lbs}
                   onChange={(e) => setLbs(e.target.value)}
-                  className="w-full p-2.5 rounded border border-graphite/30 bg-paper dark:bg-ink text-sm font-bold"
+                  className="w-full p-2.5 rounded border border-graphite/30 bg-white bg-white text-sm font-bold"
                 />
               </div>
             </>
@@ -181,7 +181,7 @@ export default function BmiCalculatorPage() {
 
         {/* Results Panel */}
         <div className="md:col-span-6 p-6 rounded-lg border border-graphite/30 bg-card-bg flex flex-col justify-center items-center text-center space-y-4">
-          <span className="text-graphite">COMPUTED BMI RATIO</span>
+          <span className="text-slate-700">COMPUTED BMI RATIO</span>
           <div className="text-4xl sm:text-5xl font-extrabold text-signal">
             {bmi ? bmi.toFixed(1) : "--"}
           </div>
@@ -192,7 +192,7 @@ export default function BmiCalculatorPage() {
             </div>
           )}
 
-          <div className="w-full pt-4 border-t border-graphite/20 text-[11px] text-graphite space-y-1 text-left">
+          <div className="w-full pt-4 border-t border-graphite/20 text-[11px] text-slate-700 space-y-1 text-left">
             <div className="flex justify-between">
               <span>Underweight:</span>
               <span>&lt; 18.5</span>

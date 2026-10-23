@@ -80,15 +80,15 @@ export default function AgeCalculatorPage() {
         <div>
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 dark:text-slate-200 hover:text-signal mb-1 transition-colors font-semibold"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 text-slate-800 hover:text-signal mb-1 transition-colors font-semibold"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>BACK TO UTILITY WORKBENCH</span>
           </Link>
-          <h1 className="font-display font-extrabold text-2xl text-slate-900 dark:text-paper">
+          <h1 className="font-display font-extrabold text-2xl text-slate-900 text-slate-900">
             Chronological Age Calculator
           </h1>
-          <p className="font-mono text-xs text-slate-800 dark:text-slate-300 font-medium">
+          <p className="font-mono text-xs text-slate-800 text-slate-800 font-medium">
             Precision temporal calculation with exact epoch breakdowns and solar return countdowns.
           </p>
         </div>
@@ -106,12 +106,12 @@ export default function AgeCalculatorPage() {
 
       <div className="p-6 rounded-lg border border-graphite/40 bg-card-bg space-y-6 font-mono text-xs shadow-sm">
         <div className="max-w-xs space-y-2">
-          <label className="text-slate-900 dark:text-slate-100 font-bold block">DATE OF BIRTH</label>
+          <label className="text-slate-900 text-slate-800 font-bold block">DATE OF BIRTH</label>
           <input
             type="date"
             value={birthDate}
             onChange={(e) => setBirthDate(e.target.value)}
-            className="w-full p-2.5 rounded border border-graphite/30 bg-paper dark:bg-ink text-sm font-bold text-ink dark:text-paper outline-none focus:border-signal"
+            className="w-full p-2.5 rounded border border-graphite/30 bg-white bg-white text-sm font-bold text-slate-900 text-slate-900 outline-none focus:border-signal"
           />
         </div>
 
@@ -119,37 +119,37 @@ export default function AgeCalculatorPage() {
           <div className="space-y-6 pt-4 border-t border-graphite/20">
             {/* Primary Age Display */}
             <div className="p-6 rounded-lg bg-blueprint/5 dark:bg-blueprint/20 border border-blueprint/30 text-center space-y-2">
-              <span className="text-graphite uppercase text-[10px]">Current Chronological Age</span>
+              <span className="text-slate-700 uppercase text-[10px]">Current Chronological Age</span>
               <div className="text-3xl sm:text-4xl font-extrabold text-signal flex items-center justify-center gap-3">
-                <span>{calculation.years} <span className="text-xs text-graphite font-normal">years</span></span>
-                <span>{calculation.months} <span className="text-xs text-graphite font-normal">months</span></span>
-                <span>{calculation.days} <span className="text-xs text-graphite font-normal">days</span></span>
+                <span>{calculation.years} <span className="text-xs text-slate-700 font-normal">years</span></span>
+                <span>{calculation.months} <span className="text-xs text-slate-700 font-normal">months</span></span>
+                <span>{calculation.days} <span className="text-xs text-slate-700 font-normal">days</span></span>
               </div>
-              <p className="text-[11px] text-graphite">You were born on a {calculation.bornDay}.</p>
+              <p className="text-[11px] text-slate-700">You were born on a {calculation.bornDay}.</p>
             </div>
 
             {/* Total Units Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
               <div className="p-3 rounded border border-graphite/20 bg-card-bg">
-                <span className="text-[10px] text-graphite block">TOTAL DAYS</span>
-                <span className="text-lg font-bold text-ink dark:text-paper">
+                <span className="text-[10px] text-slate-700 block">TOTAL DAYS</span>
+                <span className="text-lg font-bold text-slate-900 text-slate-900">
                   {calculation.totalDays.toLocaleString()}
                 </span>
               </div>
               <div className="p-3 rounded border border-graphite/20 bg-card-bg">
-                <span className="text-[10px] text-graphite block">TOTAL HOURS</span>
-                <span className="text-lg font-bold text-ink dark:text-paper">
+                <span className="text-[10px] text-slate-700 block">TOTAL HOURS</span>
+                <span className="text-lg font-bold text-slate-900 text-slate-900">
                   {calculation.totalHours.toLocaleString()}
                 </span>
               </div>
               <div className="p-3 rounded border border-graphite/20 bg-card-bg">
-                <span className="text-[10px] text-graphite block">TOTAL MINUTES</span>
-                <span className="text-lg font-bold text-ink dark:text-paper">
+                <span className="text-[10px] text-slate-700 block">TOTAL MINUTES</span>
+                <span className="text-lg font-bold text-slate-900 text-slate-900">
                   {calculation.totalMinutes.toLocaleString()}
                 </span>
               </div>
               <div className="p-3 rounded border border-graphite/20 bg-card-bg">
-                <span className="text-[10px] text-graphite block">NEXT BIRTHDAY</span>
+                <span className="text-[10px] text-slate-700 block">NEXT BIRTHDAY</span>
                 <span className="text-lg font-bold text-wire">
                   {calculation.daysUntilNextBday} days
                 </span>
@@ -157,7 +157,7 @@ export default function AgeCalculatorPage() {
             </div>
           </div>
         ) : (
-          <p className="text-graphite">Please choose a valid birth date in the past.</p>
+          <p className="text-slate-700">Please choose a valid birth date in the past.</p>
         )}
       </div>
     </div>

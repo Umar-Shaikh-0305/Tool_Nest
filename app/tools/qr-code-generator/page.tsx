@@ -72,15 +72,15 @@ export default function QrCodeGeneratorPage() {
         <div>
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 dark:text-slate-200 hover:text-signal mb-1 transition-colors font-semibold"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-800 text-slate-800 hover:text-signal mb-1 transition-colors font-semibold"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>BACK TO UTILITY WORKBENCH</span>
           </Link>
-          <h1 className="font-display font-extrabold text-2xl text-slate-900 dark:text-paper">
+          <h1 className="font-display font-extrabold text-2xl text-slate-900 text-slate-900">
             QR Code Generator
           </h1>
-          <p className="font-mono text-xs text-slate-800 dark:text-slate-300 font-medium">
+          <p className="font-mono text-xs text-slate-800 text-slate-800 font-medium">
             Instant vector &amp; raster QR code synthesis with customizable error correction and palette.
           </p>
         </div>
@@ -89,7 +89,7 @@ export default function QrCodeGeneratorPage() {
           <div className="flex items-center gap-2">
             <button
               onClick={handleSaveSpec}
-              className="px-3.5 py-2 rounded bg-paper dark:bg-ink border-2 border-signal text-slate-900 dark:text-paper font-mono font-bold text-xs flex items-center gap-1.5 shadow-sm hover:bg-signal/10 transition-colors"
+              className="px-3.5 py-2 rounded bg-white bg-white border-2 border-signal text-slate-900 text-slate-900 font-mono font-bold text-xs flex items-center gap-1.5 shadow-sm hover:bg-signal/10 transition-colors"
               title="Save date-stamped technical spec sheet"
             >
               <Save className="w-3.5 h-3.5 text-signal" />
@@ -110,20 +110,20 @@ export default function QrCodeGeneratorPage() {
         {/* Settings */}
         <div className="md:col-span-6 p-5 rounded-lg border border-graphite/40 bg-card-bg space-y-4 font-mono text-xs shadow-sm">
           <div className="space-y-1">
-            <label className="text-slate-900 dark:text-slate-100 font-bold block">ENCODED PAYLOAD / URL</label>
+            <label className="text-slate-900 text-slate-800 font-bold block">ENCODED PAYLOAD / URL</label>
             <textarea
               rows={4}
               value={text}
               onChange={(e) => setText(e.target.value)}
               placeholder="Enter URL, Wi-Fi credentials, or text payload..."
-              className="w-full bg-paper dark:bg-ink border border-graphite/40 rounded p-2.5 outline-none focus:border-signal text-slate-900 dark:text-paper text-xs font-semibold"
+              className="w-full bg-white bg-white border border-graphite/40 rounded p-2.5 outline-none focus:border-signal text-slate-900 text-slate-900 text-xs font-semibold"
             />
           </div>
 
           {/* Palette Colors */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-[11px] text-slate-800 dark:text-slate-200 font-bold block mb-1">FOREGROUND</label>
+              <label className="text-[11px] text-slate-800 text-slate-800 font-bold block mb-1">FOREGROUND</label>
               <div className="flex items-center gap-2">
                 <input
                   type="color"
@@ -131,12 +131,12 @@ export default function QrCodeGeneratorPage() {
                   onChange={(e) => setFgColor(e.target.value)}
                   className="w-8 h-8 rounded border border-graphite/40 cursor-pointer"
                 />
-                <span className="text-xs font-bold text-slate-900 dark:text-slate-100">{fgColor.toUpperCase()}</span>
+                <span className="text-xs font-bold text-slate-900 text-slate-800">{fgColor.toUpperCase()}</span>
               </div>
             </div>
 
             <div>
-              <label className="text-[11px] text-slate-800 dark:text-slate-200 font-bold block mb-1">BACKGROUND</label>
+              <label className="text-[11px] text-slate-800 text-slate-800 font-bold block mb-1">BACKGROUND</label>
               <div className="flex items-center gap-2">
                 <input
                   type="color"
@@ -144,14 +144,14 @@ export default function QrCodeGeneratorPage() {
                   onChange={(e) => setBgColor(e.target.value)}
                   className="w-8 h-8 rounded border border-graphite/40 cursor-pointer"
                 />
-                <span className="text-xs font-bold text-slate-900 dark:text-slate-100">{bgColor.toUpperCase()}</span>
+                <span className="text-xs font-bold text-slate-900 text-slate-800">{bgColor.toUpperCase()}</span>
               </div>
             </div>
           </div>
 
           {/* Error Correction */}
           <div className="space-y-1">
-            <label className="text-[11px] text-slate-800 dark:text-slate-200 font-bold block">ERROR CORRECTION LEVEL</label>
+            <label className="text-[11px] text-slate-800 text-slate-800 font-bold block">ERROR CORRECTION LEVEL</label>
             <div className="grid grid-cols-4 gap-2">
               {(["L", "M", "Q", "H"] as const).map((lvl) => (
                 <button
@@ -160,8 +160,8 @@ export default function QrCodeGeneratorPage() {
                   onClick={() => setErrorCorrection(lvl)}
                   className={`py-1.5 rounded border text-center font-bold ${
                     errorCorrection === lvl
-                      ? "border-signal bg-signal/20 text-slate-950 dark:text-wire font-extrabold"
-                      : "border-graphite/40 text-slate-800 dark:text-slate-200 hover:border-signal"
+                      ? "border-signal bg-signal/20 text-slate-950 text-emerald-700 font-extrabold"
+                      : "border-graphite/40 text-slate-800 text-slate-800 hover:border-signal"
                   }`}
                 >
                   {lvl}
@@ -178,7 +178,7 @@ export default function QrCodeGeneratorPage() {
               <img src={dataUrl} alt="QR Code Preview" className="w-56 h-56" />
             </div>
           ) : (
-            <p className="font-mono text-xs text-graphite">Enter payload to render QR</p>
+            <p className="font-mono text-xs text-slate-700">Enter payload to render QR</p>
           )}
         </div>
       </div>
